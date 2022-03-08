@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_AC1YMJ5AEeyIhbmHoqdF9w" name="inge_sw">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_ADVugJ5AEeyIhbmHoqdF9w">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_GSbuAJ5AEeyIhbmHoqdF9w" name="Fruitore"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_TG4Q4J5AEeyIhbmHoqdF9w" name="Login">
+    <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_caS9AJ5AEeyIhbmHoqdF9w" name="ExtensionPoint1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_WL_nsJ5AEeyIhbmHoqdF9w" name="Primo login fruitore">
+    <extend xmi:type="uml:Extend" xmi:id="_caRu4J5AEeyIhbmHoqdF9w" extendedCase="_TG4Q4J5AEeyIhbmHoqdF9w" extensionLocation="_caS9AJ5AEeyIhbmHoqdF9w"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_ioT-cJ5AEeyIhbmHoqdF9w" memberEnd="_ioWasJ5AEeyIhbmHoqdF9w _ioXBwJ5AEeyIhbmHoqdF9w">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ioVzoJ5AEeyIhbmHoqdF9w" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ioVzoZ5AEeyIhbmHoqdF9w" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_ioWasJ5AEeyIhbmHoqdF9w" name="login" type="_TG4Q4J5AEeyIhbmHoqdF9w" association="_ioT-cJ5AEeyIhbmHoqdF9w"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_ioXBwJ5AEeyIhbmHoqdF9w" name="fruitore" type="_GSbuAJ5AEeyIhbmHoqdF9w" association="_ioT-cJ5AEeyIhbmHoqdF9w"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_lBpNUJ5AEeyIhbmHoqdF9w" name="Visualizza dati radice categorie"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_uapkEJ5AEeyIhbmHoqdF9w" memberEnd="_uarZQJ5AEeyIhbmHoqdF9w _uarZQZ5AEeyIhbmHoqdF9w">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_uaqyMJ5AEeyIhbmHoqdF9w" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_uaqyMZ5AEeyIhbmHoqdF9w" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_uarZQJ5AEeyIhbmHoqdF9w" name="visualizza dati radice categorie" type="_lBpNUJ5AEeyIhbmHoqdF9w" association="_uapkEJ5AEeyIhbmHoqdF9w"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_uarZQZ5AEeyIhbmHoqdF9w" name="fruitore" type="_GSbuAJ5AEeyIhbmHoqdF9w" association="_uapkEJ5AEeyIhbmHoqdF9w"/>
+  </packagedElement>
+</uml:Model>

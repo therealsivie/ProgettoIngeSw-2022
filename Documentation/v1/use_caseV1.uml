@@ -40,6 +40,11 @@
     <ownedEnd xmi:type="uml:Property" xmi:id="_nI1VEKHqEeyyqLtqit8n9Q" name="amministratore" type="_QeOlYKHqEeyyqLtqit8n9Q" association="_nIzf4KHqEeyyqLtqit8n9Q"/>
     <ownedEnd xmi:type="uml:Property" xmi:id="_nI1VEaHqEeyyqLtqit8n9Q" name="registrazione configuratore" type="_dT5QQKHqEeyyqLtqit8n9Q" association="_nIzf4KHqEeyyqLtqit8n9Q"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:UseCase" xmi:id="_bsEE4KHsEeyyqLtqit8n9Q" name="Login Configuratore"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_bsEE4KHsEeyyqLtqit8n9Q" name="Login Configuratore">
+    <extend xmi:type="uml:Extend" xmi:id="_Bo8eUKO6Eey9mb46XTEyEg" extendedCase="_-iNW4KO5Eey9mb46XTEyEg" extensionLocation="_Bo-TgKO6Eey9mb46XTEyEg"/>
+  </packagedElement>
   <packagedElement xmi:type="uml:Actor" xmi:id="_qUV84KHsEeyyqLtqit8n9Q" name="Utente"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_-iNW4KO5Eey9mb46XTEyEg" name="Login Utente">
+    <extensionPoint xmi:type="uml:ExtensionPoint" xmi:id="_Bo-TgKO6Eey9mb46XTEyEg" name="ExtensionPoint1"/>
+  </packagedElement>
 </uml:Model>

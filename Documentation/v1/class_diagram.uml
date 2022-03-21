@@ -3,7 +3,4 @@
   <packageImport xmi:type="uml:PackageImport" xmi:id="_RLccwKMTEeylEMvsnoRmeg">
     <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
   </packageImport>
-  <packagedElement xmi:type="uml:Class" xmi:id="_gadvMKMUEeylEMvsnoRmeg" name="Amministratore">
-    <ownedOperation xmi:type="uml:Operation" xmi:id="_kT0mYKMUEeylEMvsnoRmeg" name="creaConfiguratore"/>
-  </packagedElement>
 </uml:Model>

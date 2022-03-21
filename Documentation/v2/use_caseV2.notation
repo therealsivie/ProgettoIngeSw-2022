@@ -62,7 +62,7 @@
       <layoutConstraint xmi:type="notation:Location" xmi:id="_QeVTEKHqEeyyqLtqit8n9Q" y="15"/>
     </children>
     <element xmi:type="uml:Actor" href="use_caseV2.uml#_QeOlYKHqEeyyqLtqit8n9Q"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_QeTd4aHqEeyyqLtqit8n9Q" x="1180" y="80"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_QeTd4aHqEeyyqLtqit8n9Q" x="1220" y="80"/>
   </children>
   <children xmi:type="notation:Shape" xmi:id="_dT8TkKHqEeyyqLtqit8n9Q" type="UseCase_Shape">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_gOLQEKHqEeyyqLtqit8n9Q" source="displayNameLabelIcon">

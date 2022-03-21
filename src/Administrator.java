@@ -10,7 +10,8 @@ public class Administrator {
         Connect db = new Connect(url);
         Connection conn = db.connect();
         db.createNewTable(conn, "Utenti");
-        String utente = InputDati.leggiStringaNonVuota("Inserisci nome Utente da creare: ");
-        db.insert("Utenti", utente, "porcodioevajhblb.ukzfb");
+        String utente = InputDati.leggiStringaNonVuota("Inserire username: ");
+        String password = InputDati.leggiStringaNonVuota("Inserire password");
+        db.insert("Utenti", utente, password);
     }
 }

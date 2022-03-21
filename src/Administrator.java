@@ -1,5 +1,6 @@
 import mylib.*;
-
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 
 public class Administrator {
@@ -10,8 +11,37 @@ public class Administrator {
         Connect db = new Connect(url);
         Connection conn = db.connect();
         db.createNewTable(conn, "Utenti");
+<<<<<<< HEAD
+        String password = getNewPassword(10);
+        String utente = InputDati.leggiStringaNonVuota("Inserisci nome Utente da creare: ");
+        System.out.println("password dell'utente "+ utente+ ": " + password);
+        writePasswordToFile(utente, password);
+        db.insert("Utenti", utente, password);
+    }
+
+    public static String getNewPassword(int passwordSize) {
+        //alphabet contiene tutti i possibili caratteri che comporranno la Password
+        String alphabet = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz?!<>-*[]{}/";
+        int alphabetLength = alphabet.length();
+        String password = "";
+        for (int i = 0; i < passwordSize; i++) {
+            // Scelgo una delle lettere dell'alfabeto.
+            int randomIndexCharInAlphabet = (int) (Math.random() * alphabetLength);
+            password += alphabet.charAt(randomIndexCharInAlphabet);
+        }
+        return password;
+    }
+
+    public static void writePasswordToFile(String username, String password){
+        try(PrintWriter out = new PrintWriter(username);) {
+            out.println(password);
+        } catch (FileNotFoundException e) {
+            System.out.println("File non creato");
+        }
+=======
         String utente = InputDati.leggiStringaNonVuota("Inserire username: ");
         String password = InputDati.leggiStringaNonVuota("Inserire password");
         db.insert("Utenti", utente, password);
+>>>>>>> 5f391d220ba84a82a1c7b511dde87e89d0f94a9e
     }
 }

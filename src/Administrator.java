@@ -6,16 +6,14 @@ import java.sql.Connection;
 public class Administrator {
     private static String url = "jdbc:sqlite:/home/alessandro/ProgettoIngeSw-2022/Data.db";
 
-
     public static void main(String[] args) {
-        Connect db = new Connect(url);
-        Connection conn = db.connect();
-        db.createNewTable(conn, "Utenti");
+        Connect db = new Connect();
+        db.createNewTable("Utenti");
         String password = getNewPassword(10);
         String utente = InputDati.leggiStringaNonVuota("Inserisci nome Utente da creare: ");
         System.out.println("password dell'utente "+ utente+ ": " + password);
         writePasswordToFile(utente, password);
-        db.insert("Utenti", utente, password, true, true);
+        db.insert(utente, password, true, true);
     }
 
     public static String getNewPassword(int passwordSize) {
@@ -32,7 +30,7 @@ public class Administrator {
     }
 
     public static void writePasswordToFile(String username, String password){
-        try(PrintWriter out = new PrintWriter(username);) {
+        try(PrintWriter out = new PrintWriter(username)) {
             out.println(password);
         } catch (FileNotFoundException e) {
             System.out.println("File non creato");

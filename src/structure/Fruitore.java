@@ -2,7 +2,7 @@ package structure;
 
 public class Fruitore extends Utente {
 
-    public Fruitore(String username, String password) {
-        super(username, password);
+    public Fruitore(int id, String username, String password) {
+        super(id, username, password);
     }
 }

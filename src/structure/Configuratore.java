@@ -2,7 +2,7 @@ package structure;
 
 public class Configuratore extends Utente{
 
-    public Configuratore(String username, String password) {
-        super(username, password);
+    public Configuratore(int id, String username, String password) {
+        super(id, username, password);
     }
 }

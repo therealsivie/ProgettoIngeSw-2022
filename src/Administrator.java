@@ -11,12 +11,11 @@ public class Administrator {
         Connect db = new Connect(url);
         Connection conn = db.connect();
         db.createNewTable(conn, "Utenti");
-<<<<<<< HEAD
         String password = getNewPassword(10);
         String utente = InputDati.leggiStringaNonVuota("Inserisci nome Utente da creare: ");
         System.out.println("password dell'utente "+ utente+ ": " + password);
         writePasswordToFile(utente, password);
-        db.insert("Utenti", utente, password);
+        db.insert("Utenti", utente, password, true, true);
     }
 
     public static String getNewPassword(int passwordSize) {
@@ -38,10 +37,5 @@ public class Administrator {
         } catch (FileNotFoundException e) {
             System.out.println("File non creato");
         }
-=======
-        String utente = InputDati.leggiStringaNonVuota("Inserire username: ");
-        String password = InputDati.leggiStringaNonVuota("Inserire password");
-        db.insert("Utenti", utente, password);
->>>>>>> 5f391d220ba84a82a1c7b511dde87e89d0f94a9e
     }
 }

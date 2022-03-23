@@ -1,10 +1,4 @@
-
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.PreparedStatement;
+import java.sql.*;
 
 public class Connect {
     String url = null;
@@ -28,7 +22,9 @@ public class Connect {
         String sql = "CREATE TABLE IF NOT EXISTS " + tableName + "(\n"
                 + "	id integer PRIMARY KEY,\n"
                 + "	username text NOT NULL,\n"
-                + "	password text NOT NULL\n"
+                + "	password text NOT NULL,\n"
+                + " firstlogin boolean NOT NULL,\n"
+                + " usertype boolean NOT NULL\n"
                 + ");";
 
         try (Statement stmt = conn.createStatement()) {
@@ -40,14 +36,38 @@ public class Connect {
         }
     }
 
-    public void insert(String nomeTabella, String username, String password) {
-        String sql = "INSERT INTO "+nomeTabella+ "(username,password) VALUES(?,?)";
+    public void insert(String nomeTabella, String username, String password, boolean firstLogin, boolean userType) {
+        String sql = "INSERT INTO "+nomeTabella+ "(username,password,firstlogin,usertype) VALUES(?,?,?,?)";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, username);
             pstmt.setString(2, password);
+            pstmt.setBoolean(3, true);
+            //se l'utente è un configuratore TRUE, se è un fruitore FALSE
+            pstmt.setBoolean(4, true);
             pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void selectAll(String nometabella, String usr, String pwd){
+        String sql = "SELECT id, username, password FROM utenti"
+                + " WHERE username = ?"
+                + " AND password = ?";
+
+        try (Connection conn = this.connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, usr);
+            pstmt.setString(2, pwd);
+            ResultSet rs = pstmt.executeQuery();
+            // loop through the result set
+            while (rs.next()) {
+                System.out.println(rs.getInt("id") +  "\t" +
+                        rs.getString("username") + "\t" +
+                        rs.getString("password"));
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

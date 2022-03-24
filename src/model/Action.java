@@ -1,5 +1,5 @@
 package model;
 
 public interface Action {
-    boolean execute();
+    boolean execute() throws ExitException;
 }

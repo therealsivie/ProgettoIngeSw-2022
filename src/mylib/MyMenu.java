@@ -31,13 +31,13 @@ public class MyMenu {
     }
 
     private void stampaMenu() {
-        System.out.println(CORNICE);
-        System.out.println(titolo);
-        System.out.println(CORNICE);
+        System.out.println();
+        System.out.println("--- " + titolo + " ----");
         for (int i = 0; i < voci.size(); i++) {
             System.out.println((i) + "\t" + voci.get(i));
         }
-        //System.out.println();
+        System.out.println(CORNICE);
+        System.out.println();
         //System.out.println(VOCE_USCITA);
         //System.out.println();
     }

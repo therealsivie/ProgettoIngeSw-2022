@@ -1,10 +1,10 @@
 import mylib.*;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.sql.Connection;
+import db.Connect;
 
 public class Administrator {
-    private static String url = "jdbc:sqlite:/home/alessandro/ProgettoIngeSw-2022/Data.db";
+    final private static String url = "jdbc:sqlite:/home/alessandro/ProgettoIngeSw-2022/Data.db";
 
     public static void main(String[] args) {
         Connect db = new Connect();
@@ -20,13 +20,13 @@ public class Administrator {
         //alphabet contiene tutti i possibili caratteri che comporranno la Password
         String alphabet = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz?!<>-*[]{}/";
         int alphabetLength = alphabet.length();
-        String password = "";
+        StringBuilder password = new StringBuilder();
         for (int i = 0; i < passwordSize; i++) {
             // Scelgo una delle lettere dell'alfabeto.
             int randomIndexCharInAlphabet = (int) (Math.random() * alphabetLength);
-            password += alphabet.charAt(randomIndexCharInAlphabet);
+            password.append(alphabet.charAt(randomIndexCharInAlphabet));
         }
-        return password;
+        return password.toString();
     }
 
     public static void writePasswordToFile(String username, String password){

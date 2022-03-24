@@ -1,7 +1,6 @@
-import structure.Configuratore;
-import structure.Fruitore;
-import structure.Utente;
+package db;
 
+import structure.*;
 import java.sql.*;
 
 public class Connect {

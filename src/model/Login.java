@@ -1,10 +1,10 @@
+package model;
+
+import db.Connect;
 import mylib.InputDati;
-import structure.Configuratore;
 import structure.Utente;
 
-import java.sql.SQLException;
-
-public class Login {
+public class Login implements Action{
     static Connect db = new Connect();
 
     public boolean doLogin() {
@@ -40,5 +40,10 @@ public class Login {
         while (!credentialsChanged);
         System.out.println("Utente " + newUser + " modificato correttamente");
         return credentialsChanged;
+    }
+
+    @Override
+    public boolean execute() {
+        return doLogin();
     }
 }

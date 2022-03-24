@@ -5,9 +5,9 @@ import structure.Utente;
 import java.sql.*;
 
 public class Connect {
-    String url = null;
+    String url;
 
-    public Connect(){
+    public Connect() {
         this.url = "jdbc:sqlite:/home/alessandro/ProgettoIngeSw-2022/Data.db";
     }
 
@@ -55,52 +55,71 @@ public class Connect {
             System.out.println(e.getMessage());
         }
     }
-    public void updateCredentials(Utente utente){
-        String sql = "UPDATE utenti SET username = ? , "
-                + "password = ? , "
-                + "firstlogin = ? "
-                + "WHERE id = ?";
 
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, utente.getUsername());
-            pstmt.setString(2, utente.getPassword());
-            pstmt.setBoolean(3, false);
-            pstmt.setInt(4, utente.getId());
-            utente.setFirstLogin(false);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
     public Utente checkLogin(String usr, String pwd) {
 
-        String sql = "SELECT id, username, password, firstlogin, usertype  FROM utenti"
+        String sql = "SELECT id, username, password, firstlogin, usertype FROM utenti"
                 + " WHERE username = ?"
                 + " AND password = ?";
 
         try (Connection conn = this.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)){
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, usr);
             pstmt.setString(2, pwd);
             ResultSet rs = pstmt.executeQuery();
             int id = rs.getInt("id");
             String user = rs.getString("username");
             String pass = rs.getString("password");
+            boolean firstLogin = rs.getBoolean("firstlogin");
             //conn.close();
-            if(rs.getBoolean("usertype")) {
+            if (rs.getBoolean("usertype")) {
                 Configuratore c = new Configuratore(id, user, pass);
-                c.setFirstLogin(true);
+                c.setFirstLogin(firstLogin);
                 return c;
-            }
-            else {
+            } else {
                 Fruitore f = new Fruitore(id, user, pass);
-                f.setFirstLogin(true);
+                f.setFirstLogin(firstLogin);
                 return f;
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             return null;
+        }
+    }
+
+    public boolean updateCredentials(Utente utente, String newUser, String newPass) {
+        boolean checked = this.checkNewUser(newUser);
+        if (checked) {
+            String sql = "UPDATE utenti SET username = ? , "
+                    + "password = ? , "
+                    + "firstlogin = ? "
+                    + "WHERE id = ?";
+            utente.setFirstLogin(false);
+            try (Connection conn = this.connect();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, newUser);
+                pstmt.setString(2, newPass);
+                pstmt.setBoolean(3, utente.getFirstLogin());
+                pstmt.setInt(4, utente.getId());
+                pstmt.executeUpdate();
+                return checked;
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return checked;
+    }
+
+    public boolean checkNewUser(String newUser) {
+        String sql = "SELECT username FROM utenti"
+                + " WHERE username = ?";
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, newUser);
+            ResultSet rs = pstmt.executeQuery();
+            rs.getString("username");
+            return false;
+        } catch (SQLException e) {
+            return true;
         }
     }
 }

@@ -1,10 +1,11 @@
-package model;
+package controller;
 
 import db.Connect;
+import model.Action;
 import mylib.InputDati;
 import structure.Utente;
 
-public class Login implements Action{
+public class Login implements Action {
     static Connect db = new Connect();
 
     public boolean doLogin() {

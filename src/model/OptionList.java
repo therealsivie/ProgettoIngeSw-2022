@@ -1,4 +1,7 @@
 package model;
+import controller.Login;
+import controller.VisualizzaGerarchie;
+
 import java.util.ArrayList;
 
 public class OptionList {

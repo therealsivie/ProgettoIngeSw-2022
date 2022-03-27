@@ -3,7 +3,7 @@ import controller.Login;
 import model.OptionList;
 import mylib.MyMenu;
 
-public class mainProva {
+public class MainProva {
     public static void main(String[] args) {
         Login login = new Login();
         OptionList option = new OptionList();

@@ -1,5 +1,6 @@
 package model;
 import controller.Login;
+import controller.Logout;
 import controller.VisualizzaGerarchie;
 
 import java.util.ArrayList;
@@ -17,8 +18,7 @@ public class OptionList {
     public void setLoggedOption(){
         voci.clear();
         voci.add(new Option("Esci", new Exit()));
-        ///da fare il logout
-        voci.add(new Option("Logout", new Login()));
+        voci.add(new Option("Logout", new Logout()));
         voci.add(new Option("Visualizza Gerarchie", new VisualizzaGerarchie()));
         voci.add(new Option("Aggiungi gerarchia", new VisualizzaGerarchie()));
         voci.add(new Option("prova", new VisualizzaGerarchie()));

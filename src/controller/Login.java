@@ -16,7 +16,7 @@ public class Login implements Action {
         //controllo correttezza login
         if(u != null) {
             if (user.equals(u.getUsername()) && pass.equals(u.getPassword())) {
-                //se first Login, procedura per il first Login, altrimenti loggato
+                //se first Login, procedura per il first Login, altrimenti si logga normalmente
                 if (u.getFirstLogin()) {
                     return firstLogin(u);
                 }

@@ -38,8 +38,6 @@ public class MyMenu {
         }
         System.out.println(CORNICE);
         System.out.println();
-        //System.out.println(VOCE_USCITA);
-        //System.out.println();
     }
 
 }

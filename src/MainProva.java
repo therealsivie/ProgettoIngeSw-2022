@@ -3,7 +3,6 @@ import model.ExitException;
 import controller.Login;
 import model.OptionList;
 import mylib.MyMenu;
-import structure.Tree;
 
 public class MainProva {
     public static void main(String[] args) {

@@ -7,7 +7,7 @@ public class Connect {
     String url;
 
     public Connect() {
-        this.url = "jdbc:sqlite:/home/alessandro/ProgettoIngeSw-2022/Data.db";
+        this.url = "jdbc:sqlite:/home/michelinux/IdeaProjects/ProgettoIngeSw-2022/Data.db";
     }
 
     public Connection connect() {

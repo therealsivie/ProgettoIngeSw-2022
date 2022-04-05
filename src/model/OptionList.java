@@ -1,7 +1,5 @@
 package model;
-import controller.Login;
-import controller.Logout;
-import controller.VisualizzaGerarchie;
+import controller.*;
 
 import java.util.ArrayList;
 
@@ -20,7 +18,8 @@ public class OptionList {
         voci.add(new Option("Esci", new Exit()));
         voci.add(new Option("Logout", new Logout()));
         voci.add(new Option("Visualizza Gerarchie", new VisualizzaGerarchie()));
-        voci.add(new Option("Aggiungi gerarchia", new VisualizzaGerarchie()));
+        voci.add(new Option("Inserisci gerarchia", new InserisciGerarchia()));
+        voci.add(new Option("Inserisci categoria", new InserisciCategoria()));
         voci.add(new Option("prova", new VisualizzaGerarchie()));
     }
 

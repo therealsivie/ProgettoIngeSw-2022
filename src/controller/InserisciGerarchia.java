@@ -7,18 +7,14 @@ import structure.Gerarchia;
 public class InserisciGerarchia implements Action {
     @Override
     public boolean execute() {
-        inserisci();
+        inserisciGerarchia();
         return false;
     }
 
 
-    private void inserisci(){
-
-
-
+    private void inserisciGerarchia(){
         String nomeGerarchia = InputDati.leggiStringaNonVuota("Inserire nome gerarchia: ");
         String descrizione = InputDati.leggiStringaNonVuota("Inserire descrizione: ");
         Gerarchia g = new Gerarchia(nomeGerarchia, descrizione);
-
     }
 }

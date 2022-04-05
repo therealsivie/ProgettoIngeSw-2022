@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import db.Connect;
 
 public class Administrator {
-    final private static String url = "jdbc:sqlite:/home/alessandro/ProgettoIngeSw-2022/Data.db";
+    final private static String url = "jdbc:sqlite:/home/michelinux/IdeaProjects/ProgettoIngeSw-2022/Data.db";
 
     public static void main(String[] args) {
         Connect db = new Connect();

@@ -11,7 +11,7 @@ public class Gerarchia {
     public Gerarchia(String nome, String descrizione) {
         Categoria radice = new Categoria(nome, descrizione);
         struttura = new TreeMap<Integer, Categoria>();
-        struttura.put(1, radice); //UNO perchè nodo radice, seguiranno i successivi numeri naturali per i figli
+        this.inserisciCategoria(1, radice); //UNO perchè nodo radice, seguiranno i successivi numeri naturali per i figli
     }
 
     public void inserisciCategoria(Integer nodo, Categoria daInserire){

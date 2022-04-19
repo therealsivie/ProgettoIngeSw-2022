@@ -6,8 +6,8 @@ import java.sql.*;
 public class Connect {
     String url;
 
-    public Connect() {
-        this.url = "jdbc:sqlite:/home/michelinux/IdeaProjects/ProgettoIngeSw-2022/Data.db";
+    public Connect(String url) {
+        this.url = url;
     }
 
     public Connection connect() {

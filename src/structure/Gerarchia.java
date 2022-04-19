@@ -1,21 +1,22 @@
 package structure;
 
-import java.util.ArrayList;
 import java.util.TreeMap;
 
 public class Gerarchia {
-    //si assume che la categoria radice di una gerarchia sia la radice della gerarchia stessa
-    //(la creazione di una nuova gerarchia implica la creazione della sua categoria radice)
-    private TreeMap<Integer, Categoria> struttura;
+    private final Categoria categoriaRadice;
 
-    public Gerarchia(String nome, String descrizione) {
-        Categoria radice = new Categoria(nome, descrizione);
-        struttura = new TreeMap<Integer, Categoria>();
-        this.inserisciCategoria(1, radice); //UNO perchè nodo radice, seguiranno i successivi numeri naturali per i figli
+    public Gerarchia(Categoria categoria) {
+        this.categoriaRadice = categoria;
     }
 
-    public void inserisciCategoria(Integer nodo, Categoria daInserire){
-        struttura.put(nodo, daInserire);
-        //albero
+    public Categoria getCategoriaRadice() {
+        return this.categoriaRadice;
+    }
+
+    public String toString(){
+        StringBuilder str = new StringBuilder();
+        str.append("Nome: ").append(categoriaRadice.getNome())
+                .append("Descrizione: ").append(categoriaRadice.getDescrizione());
+        return str.toString();
     }
 }

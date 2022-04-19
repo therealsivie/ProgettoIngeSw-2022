@@ -11,37 +11,25 @@ public class MainProva {
         MyMenu menu = new MyMenu("Programma Configuratore");
         boolean logged = false;
 
-        //prova
-
-
-        menu.setVoci(option.getOptionList(logged));
-        do {
-            int scelta = menu.scegli();
-            try {
-                logged = option.getOption(scelta).getAction().execute();
-                if (!logged) {
-                    System.out.println("Login Fallito...");
-                }
-            } catch (ExitException e) {
-                System.out.println(e.getMessage());
-                System.exit(1);
+        do{
+            if(!logged){
+                menu.setVoci(option.getOptionList(false));
             }
-        } while (!logged);
-        menu.setVoci(option.getOptionList(logged));
-        while(logged){
+            else{
+                menu.setVoci(option.getOptionList(true));
+            }
             int scelta = menu.scegli();
             try {
-                if(option.getOption(scelta).getAction() instanceof Logout){
-                    logged = false;
+                if (option.getOption(scelta).getAction() instanceof Login || option.getOption(scelta).getAction() instanceof Logout) {
+                    logged = option.getOption(scelta).getAction().execute();
                 }
-                else{
+                else {
                     option.getOption(scelta).getAction().execute();
                 }
             } catch (ExitException e) {
                 System.out.println(e.getMessage());
                 System.exit(1);
             }
-        }
-
+        }while(true);
     }
 }

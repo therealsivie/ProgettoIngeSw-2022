@@ -17,6 +17,6 @@ public class InserisciCategoria implements Action {
         String nomeCategoria = InputDati.leggiStringaNonVuota("Inserire nome categoria: ");
         String descrizione = InputDati.leggiStringaNonVuota("Inserire descrizione: ");
         //serve la scelta su dove inserire la categoria (gerarchia di riferimento e categoria padre)
-        Categoria c = new Categoria(nomeCategoria, descrizione);
+        //Categoria c = new Categoria(nomeCategoria, descrizione);
     }
 }

@@ -19,8 +19,6 @@ public class OptionList {
         voci.add(new Option("Logout", new Logout()));
         voci.add(new Option("Visualizza Gerarchie", new VisualizzaGerarchie()));
         voci.add(new Option("Inserisci gerarchia", new InserisciGerarchia()));
-        voci.add(new Option("Inserisci categoria", new InserisciCategoria()));
-        voci.add(new Option("prova", new VisualizzaGerarchie()));
     }
 
     public ArrayList<String> getOptionList(boolean logged){

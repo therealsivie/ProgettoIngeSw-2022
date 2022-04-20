@@ -6,7 +6,7 @@ import mylib.InputDati;
 import structure.Utente;
 
 public class Login implements Action {
-    Connect db = new Connect("jdbc:sqlite:/home/alessandro/ProgettoIngeSw-2022/Data.db");
+    Connect db = new Connect("jdbc:sqlite:/home/alessandro/JavaProjects/ProgettoIngeSw-2022/Data.db");
     public boolean doLogin() {
         String user = InputDati.leggiStringaNonVuota("Inserisci username: ");
         String pass = InputDati.leggiStringaNonVuota("Inserisci password: ");

@@ -8,9 +8,7 @@
     </content>
     <orderEntry type="jdk" jdkName="corretto-15" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jackson-core-2.13.0" level="project" />
-    <orderEntry type="library" name="jackson-databind-2.13.0" level="project" />
-    <orderEntry type="library" name="jackson-annotations-2.13.0" level="project" />
     <orderEntry type="library" name="sqlite-jdbc-3.34.0" level="project" />
+    <orderEntry type="library" name="gson-2.9.0" level="project" />
   </component>
 </module>

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Categoria {
     private String nome;
     private String descrizione;
-    private ArrayList<CampoNativo> campi;
+    private ArrayList<CampoNativo> campi = null;
     private CategoriaPadre padre = null;
     public String getNome() {
         return nome;
@@ -27,7 +27,10 @@ public class Categoria {
         return campi;
     }
 
-    public void addCamp0(CampoNativo campoNativo) {
+    public void addCampo(CampoNativo campoNativo) {
+        if(this.campi == null){
+            campi = new ArrayList<>();
+        }
         this.campi.add(campoNativo);
     }
 

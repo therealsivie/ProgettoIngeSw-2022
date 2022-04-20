@@ -4,10 +4,10 @@ import java.io.PrintWriter;
 import db.Connect;
 
 public class Administrator {
-    final private static String url = "jdbc:sqlite:/home/alessandro/ProgettoIngeSw-2022/Data.db";
+    final private static String url = "jdbc:sqlite:/home/alessandro/JavaProjects/ProgettoIngeSw-2022/Data.db";
 
     public static void main(String[] args) {
-        Connect db = new Connect(args[0]);
+        Connect db = new Connect(url);
         db.createNewTable("Utenti");
         String password = getNewPassword(10);
         String utente = InputDati.leggiStringaNonVuota("Inserisci nome Utente da creare: ");

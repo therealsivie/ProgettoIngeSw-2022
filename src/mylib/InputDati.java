@@ -22,7 +22,7 @@ public class InputDati {
 
 	public static String leggiStringa(String messaggio) {
 		System.out.print(messaggio);
-		return lettore.next();
+		return lettore.nextLine();
 	}
 
 	public static String leggiStringaNonVuota(String messaggio) {
@@ -80,7 +80,7 @@ public class InputDati {
 				finito = true;
 			} catch (InputMismatchException e) {
 				System.out.println(ERRORE_FORMATO);
-				//String daButtare = lettore.next();
+				String daButtare = lettore.nextLine();
 			}
 		} while (!finito);
 		return valoreLetto;
@@ -155,7 +155,7 @@ public class InputDati {
 	}
 
 	public static boolean yesOrNo(String messaggio) {
-		String mioMessaggio = messaggio + "(" + RISPOSTA_SI + "/" + RISPOSTA_NO + ")";
+		String mioMessaggio = messaggio + "(" + RISPOSTA_SI + "/" + RISPOSTA_NO + "): ";
 		char valoreLetto = leggiUpperChar(mioMessaggio, String.valueOf(RISPOSTA_SI) + String.valueOf(RISPOSTA_NO));
 
 		if (valoreLetto == RISPOSTA_SI)

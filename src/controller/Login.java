@@ -1,12 +1,12 @@
 package controller;
 
-import db.Connect;
+import data.DbConnect;
 import model.Action;
 import mylib.InputDati;
 import structure.Utente;
 
 public class Login implements Action {
-    Connect db = new Connect("jdbc:sqlite:/home/alessandro/JavaProjects/ProgettoIngeSw-2022/Data.db");
+    DbConnect db = new DbConnect();
     public boolean doLogin() {
         String user = InputDati.leggiStringaNonVuota("Inserisci username: ");
         String pass = InputDati.leggiStringaNonVuota("Inserisci password: ");

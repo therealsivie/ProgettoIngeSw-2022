@@ -45,4 +45,16 @@ public class Categoria {
     public boolean isPadre(){
         return this.padre == null;
     }
+
+    public String toString(){
+        StringBuilder str = new StringBuilder();
+        str.append("Nome: ").append(nome)
+                .append("\nDescrizione: ").append(descrizione);
+        for (CampoNativo c: campi){
+            str.append("\nNome campo: ").append(c.getNomeCampo())
+                    .append(c.isRequired()? "": "\t(opzionale)");
+        }
+        str.append("\n");
+        return str.toString();
+    }
 }

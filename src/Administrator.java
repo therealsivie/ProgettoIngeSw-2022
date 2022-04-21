@@ -1,13 +1,11 @@
 import mylib.*;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import db.Connect;
+import data.DbConnect;
 
 public class Administrator {
-    final private static String url = "jdbc:sqlite:/home/alessandro/JavaProjects/ProgettoIngeSw-2022/Data.db";
-
     public static void main(String[] args) {
-        Connect db = new Connect(url);
+        DbConnect db = new DbConnect();
         db.createNewTable("Utenti");
         String password = getNewPassword(10);
         String utente = InputDati.leggiStringaNonVuota("Inserisci nome Utente da creare: ");

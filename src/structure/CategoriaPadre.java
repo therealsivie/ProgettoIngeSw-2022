@@ -6,9 +6,13 @@ import java.util.List;
 public class CategoriaPadre extends Categoria {
     private List<Categoria> figli = new ArrayList<>();
 
-    public CategoriaPadre(String nome, String descrizione){
+    public CategoriaPadre(String nome, String descrizione, ArrayList<CampoNativo> campi, ArrayList<Categoria> figli){
         this.setNome(nome);
         this.setDescrizione(descrizione);
+        this.figli = figli;
+        for (CampoNativo campo: campi){
+            this.addCampo(campo);
+        }
     }
 
     public void addFiglio(Categoria figlio){

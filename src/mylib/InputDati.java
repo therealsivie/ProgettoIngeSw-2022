@@ -22,12 +22,13 @@ public class InputDati {
 
 	public static String leggiStringa(String messaggio) {
 		System.out.print(messaggio);
+		lettore.reset();
 		return lettore.nextLine();
 	}
 
 	public static String leggiStringaNonVuota(String messaggio) {
 		boolean finito = false;
-		String lettura = null;
+		String lettura;
 		do {
 			lettura = leggiStringa(messaggio);
 			lettura = lettura.trim();
@@ -77,6 +78,8 @@ public class InputDati {
 			System.out.print(messaggio);
 			try {
 				valoreLetto = lettore.nextInt();
+				lettore.nextLine();
+				//lettore.reset();
 				finito = true;
 			} catch (InputMismatchException e) {
 				System.out.println(ERRORE_FORMATO);
@@ -120,7 +123,7 @@ public class InputDati {
 			else
 				System.out.println(ERRORE_MASSIMO + massimo);
 		} while (!finito);
-
+		lettore.reset();
 		return valoreLetto;
 	}
 

@@ -1,15 +1,10 @@
-package db;
+package data;
 
 import structure.*;
 import java.sql.*;
 
-public class Connect {
-    String url;
-
-    public Connect(String url) {
-        this.url = url;
-    }
-
+public class DbConnect {
+    String url = "jdbc:sqlite:/home/alessandro/JavaProjects/ProgettoIngeSw-2022/Data.db";
     public Connection connect() {
         Connection conn = null;
         try {

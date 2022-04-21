@@ -14,9 +14,6 @@ public class Gerarchia {
     }
 
     public String toString(){
-        StringBuilder str = new StringBuilder();
-        str.append("Nome: ").append(categoriaRadice.getNome())
-                .append("Descrizione: ").append(categoriaRadice.getDescrizione());
-        return str.toString();
+        return categoriaRadice.toString();
     }
 }

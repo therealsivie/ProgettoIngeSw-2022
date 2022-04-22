@@ -18,10 +18,23 @@ public class InserisciGerarchia implements Action {
     }
 
     private void inserisciGerarchia() {
-        boolean exit = false;
-        String nomeGerarchia = InputDati.leggiStringaNonVuota("Inserire nome gerarchia: ");
+        boolean exitNomeRipetuto = true;
+        String nomeGerarchia;
+        do{
+            nomeGerarchia = InputDati.leggiStringaNonVuota("Inserire nome gerarchia: ");
+            if(!JsonUtil.checkNomeGerarchiaRipetuto(nomeGerarchia)){
+                exitNomeRipetuto = false;
+            }
+            else {
+                System.out.println("Nome della gerarchia già presente!");
+            }
+        }while (exitNomeRipetuto);
+
         String descrizione = InputDati.leggiStringaNonVuota("Inserire descrizione: ");
         ArrayList<CampoNativo> campi = new ArrayList<>();
+        //campi nativi sempre presenti
+        campi.add(new CampoNativo("Stato di conservazione", true));
+        campi.add(new CampoNativo("Descrizione libera", false));
 
         //inserimento campi nativi
         boolean decisione = false;
@@ -40,12 +53,8 @@ public class InserisciGerarchia implements Action {
 
         boolean save = InputDati.yesOrNo("Vuoi salvare la gerarchia inserita?");
         if (save) {
-            try {
-                JsonUtil.writeGerarchia(gerarchia);
-                System.out.println("salvato");
-            } catch (IOException e) {
-                System.out.println("Errore nel salvataggio della gerarchia");
-            }
+            JsonUtil.writeGerarchia(gerarchia);
+            System.out.println("salvato");
         }
 
     }

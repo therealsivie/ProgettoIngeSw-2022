@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriaPadre extends Categoria {
-    private List<Categoria> figli = new ArrayList<>();
+    private final List<Categoria> figli;
 
     public CategoriaPadre(String nome, String descrizione, ArrayList<CampoNativo> campi, ArrayList<Categoria> figli){
         this.setNome(nome);
@@ -25,7 +25,7 @@ public class CategoriaPadre extends Categoria {
         this.figli.remove(figlio);
     }
 
-    public Categoria[] getFigli(){
-        return this.figli.toArray(Categoria[]::new);
+    public List<Categoria> getFigli(){
+        return this.figli;
     }
 }

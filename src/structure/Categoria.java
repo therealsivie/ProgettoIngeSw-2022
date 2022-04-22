@@ -57,4 +57,13 @@ public class Categoria {
         str.append("\n");
         return str.toString();
     }
+
+    public boolean checkNomeRipetuto(String nome) {
+        for (Categoria c: padre.getFigli()){
+            if(c.getNome().equalsIgnoreCase(nome)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

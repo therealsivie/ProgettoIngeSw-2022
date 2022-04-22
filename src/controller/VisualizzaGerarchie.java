@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VisualizzaGerarchie implements Action {
-    private void visualizza(){
+    private void visualizza() {
         List<Gerarchia> gerarchiaList = JsonUtil.readGerarchie();
-        for (Gerarchia gerarchia: gerarchiaList){
-            if(gerarchia != null) {
+        if (gerarchiaList != null) {
+            for (Gerarchia gerarchia : gerarchiaList)
                 System.out.println(gerarchia);
-            } else
-                System.out.println("Non sono presenti gerarchie.");
-        }
+        } else
+            System.out.println("Non sono presenti gerarchie.");
     }
+
     @Override
     public boolean execute() {
         this.visualizza();

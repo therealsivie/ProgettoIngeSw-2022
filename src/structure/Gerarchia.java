@@ -1,7 +1,5 @@
 package structure;
 
-import java.util.TreeMap;
-
 public class Gerarchia {
     private final Categoria categoriaRadice;
 
@@ -15,5 +13,9 @@ public class Gerarchia {
 
     public String toString(){
         return categoriaRadice.toString();
+    }
+
+    public boolean nomeRipetuto(String nome){
+        return this.categoriaRadice.checkNomeRipetuto(nome);
     }
 }

@@ -3,7 +3,7 @@ package mylib;
 import java.util.*;
 
 public class InputDati {
-	private static Scanner lettore = creaScanner();
+	private final static Scanner lettore = creaScanner();
 
 	private final static String ERRORE_FORMATO = "Attenzione: il dato inserito non e' nel formato corretto";
 	private final static String ERRORE_MINIMO = "Attenzione: e' richiesto un valore maggiore o uguale a ";
@@ -15,9 +15,7 @@ public class InputDati {
 	private final static char RISPOSTA_NO = 'N';
 
 	private static Scanner creaScanner() {
-		Scanner creato = new Scanner(System.in);
-		//creato.useDelimiter(System.getProperty("line.separator"));
-		return creato;
+		return new Scanner(System.in);
 	}
 
 	public static String leggiStringa(String messaggio) {
@@ -47,6 +45,7 @@ public class InputDati {
 		do {
 			System.out.print(messaggio);
 			String lettura = lettore.next();
+			lettore.nextLine();
 			if (lettura.length() > 0) {
 				valoreLetto = lettura.charAt(0);
 				finito = true;

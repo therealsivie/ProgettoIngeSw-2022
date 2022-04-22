@@ -13,7 +13,7 @@ import java.util.List;
 public class JsonUtil {
     private final static String listaFile = "files/listaGerarchie.txt";
     private final static String dataName = "files/gerarchie/gerarchia";
-    private static int numFile = getNumFile();
+    private final static int numFile = getNumFile();
 
     private static int getNumFile() {
         File file = new File(listaFile);
@@ -26,28 +26,32 @@ public class JsonUtil {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         return lines;
     }
 
-    public static void writeGerarchia(Gerarchia gerarchia) throws IOException {
+    public static void writeGerarchia(Gerarchia gerarchia) {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        FileWriter writer = null;
         int numFile = JsonUtil.getNumFile();
         String nomeFile = dataName + numFile + ".json";
         JsonUtil.addFileToListaFile(nomeFile);
-        writer = new FileWriter(nomeFile);
-        writer.write(gson.toJson(gerarchia));
-        writer.close();
+        try (
+                FileWriter writer = new FileWriter(nomeFile)
+        ) {
+            writer.write(gson.toJson(gerarchia));
+        } catch (IOException e) {
+            System.out.println("Errore nel salvataggio della gerarchia");
+        }
+
     }
 
     private static void addFileToListaFile(String nomeFile) {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(listaFile, true));
+        try (
+                BufferedWriter writer = new BufferedWriter(new FileWriter(listaFile, true))
+        ) {
             writer.append(nomeFile);
             writer.newLine();
-            writer.close();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -57,8 +61,10 @@ public class JsonUtil {
         ArrayList<String> listOfLines = new ArrayList<>();
         try {
             BufferedReader bufReader = new BufferedReader(new FileReader(listaFile));
-
             String line = bufReader.readLine();
+            if(line == null || JsonUtil.getNumFile()==0){
+                return null;
+            }
             while (line != null) {
                 listOfLines.add(line);
                 line = bufReader.readLine();
@@ -71,20 +77,38 @@ public class JsonUtil {
 
     public static List<Gerarchia> readGerarchie() {
         List<Gerarchia> gerarchiaList = new ArrayList<>();
-        Gerarchia gerarchia = null;
+        Gerarchia gerarchia;
         try {
-            Reader reader = null;
+            Reader reader;
+            if(JsonUtil.createListOfFile() == null){
+                return null;
+            }
             for (String file : JsonUtil.createListOfFile()) {
-                 reader = Files.newBufferedReader(Paths.get(file));
+                reader = Files.newBufferedReader(Paths.get(file));
                 Gson gson = new Gson();
                 // convert JSON file to Gerarchia
                 gerarchia = gson.fromJson(reader, Gerarchia.class);
                 gerarchiaList.add(gerarchia);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (IOException ex) {
+            System.out.println("Errore apertura file Gerarchie");
         }
-
         return gerarchiaList;
+    }
+    public static boolean checkNomeGerarchiaRipetuto(String nome){
+        List<Gerarchia> gerarchiaList = JsonUtil.readGerarchie();
+        for(Gerarchia g: gerarchiaList){
+            if(g.getCategoriaRadice().getNome().equalsIgnoreCase(nome)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean checkNomeCategoriaRipetuto(String nome){
+        List<Gerarchia> gerarchiaList = JsonUtil.readGerarchie();
+        for(Gerarchia g: gerarchiaList){
+            return g.nomeRipetuto(nome);
+        }
+        return false;
     }
 }

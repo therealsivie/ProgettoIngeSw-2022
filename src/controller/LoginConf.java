@@ -5,9 +5,9 @@ import model.Action;
 import mylib.InputDati;
 import structure.Utente;
 
-public class Login implements Action {
+public class LoginConf implements Action {
     DbConnect db = new DbConnect();
-    public boolean doLogin() {
+    private boolean doLogin() {
         String user = InputDati.leggiStringaNonVuota("Inserisci username: ");
         String pass = InputDati.leggiStringaNonVuota("Inserisci password: ");
         Utente u = db.checkLogin(user, pass);
@@ -28,7 +28,7 @@ public class Login implements Action {
         return false;
     }
 
-    public boolean firstLogin(Utente utente) {
+    private boolean firstLogin(Utente utente) {
         boolean credentialsChanged;
         String newUser;
         String newPass;

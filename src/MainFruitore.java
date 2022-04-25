@@ -1,0 +1,28 @@
+import controller.LoginFruit;
+import controller.Logout;
+import model.Action;
+import model.ExitException;
+import model.OptionList;
+import mylib.MyMenu;
+
+public class MainFruitore {
+    public static void main(String[] args) {
+        OptionList option = new OptionList();
+        MyMenu menu = new MyMenu("Programma Fruitore");
+        boolean logged = false;
+        do{
+            menu.setVoci(option.getFruitOptionList(logged));
+            int scelta = menu.scegli();
+            try {
+                Action action =option.getOption(scelta).getAction();
+                if(action instanceof LoginFruit || action instanceof Logout)
+                    logged = action.execute();
+                else
+                    action.execute();
+            } catch (ExitException e) {
+                System.out.println(e.getMessage());
+                System.exit(1);
+            }
+        }while (true);
+    }
+}

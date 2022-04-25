@@ -65,6 +65,7 @@ public class DbConnect {
             String user = rs.getString("username");
             String pass = rs.getString("password");
             boolean firstLogin = rs.getBoolean("firstlogin");
+            boolean userType = rs.getBoolean("usertype");
             //conn.close();
             if (rs.getBoolean("usertype")) {
                 Configuratore c = new Configuratore(id, user, pass);

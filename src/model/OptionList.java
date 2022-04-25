@@ -7,13 +7,13 @@ public class OptionList {
     final private ArrayList<Option> voci = new ArrayList<>();
     String[] arr;
     public OptionList(){}
-    public void setOption(){
+    private void setOptionConf(){
         voci.clear();
         voci.add(new Option("Esci", new Exit()));
-        voci.add(new Option("Login", new Login()));
+        voci.add(new Option("Login", new LoginConf()));
         voci.add(new Option("Visualizza Gerarchie", new VisualizzaGerarchie()));
     }
-    public void setLoggedOption(){
+    private void setLoggedOptionConf(){
         voci.clear();
         voci.add(new Option("Esci", new Exit()));
         voci.add(new Option("Logout", new Logout()));
@@ -21,12 +21,15 @@ public class OptionList {
         voci.add(new Option("Inserisci Gerarchia", new InserisciGerarchia()));
     }
 
-    public ArrayList<String> getOptionList(boolean logged){
+
+
+
+    public ArrayList<String> getConfOptionList(boolean logged){
         if(logged){
-            this.setLoggedOption();
+            this.setLoggedOptionConf();
         }
         else{
-            this.setOption();
+            this.setOptionConf();
         }
         ArrayList<String> temp = new ArrayList<>();
         for (Option opt: voci){
@@ -34,18 +37,33 @@ public class OptionList {
         }
         return temp;
     }
-    /*
-    public ArrayList<String> getOptionList(){
+
+    public Option getOption(int n){
+        return voci.get(n);
+    }
+
+
+    public ArrayList<String> getFruitOptionList(boolean logged) {
+        if (logged)
+            this.setLoggedOptionFruit();
+        else
+            this.setOptionFruit();
         ArrayList<String> temp = new ArrayList<>();
-        for(Option opt: voci){
-            if(!opt.isRequireLogin()){
-                temp.add(opt.getLabel());
-            }
+        for (Option opt: voci){
+            temp.add(opt.getLabel());
         }
         return temp;
     }
-    */
-    public Option getOption(int n){
-        return voci.get(n);
+
+    private void setOptionFruit() {
+        voci.clear();
+        voci.add(new Option("Esci", new Exit()));
+        voci.add(new Option("Login", new LoginFruit()));
+    }
+
+    private void setLoggedOptionFruit() {
+        voci.clear();
+        voci.add(new Option("Esci", new Exit()));
+        voci.add(new Option("Logout", new Logout()));
     }
 }

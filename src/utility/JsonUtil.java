@@ -6,35 +6,33 @@ import model.structure.Gerarchia;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class JsonUtil {
-    private final static String listaFile = "files/listaGerarchie.txt";
+    private final static String directory = "files/gerarchie/";
     private final static String dataName = "files/gerarchie/gerarchia";
-    private final static int numFile = getNumFile();
 
-    private static int getNumFile() {
-        File file = new File(listaFile);
-        int lines = 0;
-        try {
-            file.createNewFile();
-            LineNumberReader lnr = new LineNumberReader(new FileReader(file));
-            while (lnr.readLine() != null) ;
-            lines = lnr.getLineNumber();
+    private static long getNumFile() {
+        long count = 0;
+        try (Stream<Path> files = Files.list(Paths.get(directory))) {
+            count = files.count();
+            System.out.println(count);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Errore di sto cazzo");
         }
-        return lines;
+        return count;
     }
 
     public static void writeGerarchia(Gerarchia gerarchia) {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        int numFile = JsonUtil.getNumFile();
+        long numFile = JsonUtil.getNumFile();
         String nomeFile = dataName + numFile + ".json";
-        JsonUtil.addFileToListaFile(nomeFile);
         try (
                 FileWriter writer = new FileWriter(nomeFile)
         ) {
@@ -45,34 +43,14 @@ public class JsonUtil {
 
     }
 
-    private static void addFileToListaFile(String nomeFile) {
-        try (
-                BufferedWriter writer = new BufferedWriter(new FileWriter(listaFile, true))
-        ) {
-            writer.append(nomeFile);
-            writer.newLine();
-
+    private static List<Path> createListOfFile() {
+        List<Path> list = null;
+        try (Stream<Path> files = Files.list(Paths.get(directory))) {
+            list = files.collect(Collectors.toList());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Errore di sto cazzo");
         }
-    }
-
-    private static List<String> createListOfFile() {
-        ArrayList<String> listOfLines = new ArrayList<>();
-        try {
-            BufferedReader bufReader = new BufferedReader(new FileReader(listaFile));
-            String line = bufReader.readLine();
-            if(line == null || JsonUtil.getNumFile()==0){
-                return null;
-            }
-            while (line != null) {
-                listOfLines.add(line);
-                line = bufReader.readLine();
-            }
-        } catch (IOException e) {
-            System.out.println("Errore lista file");
-        }
-        return listOfLines;
+        return list;
     }
 
     public static List<Gerarchia> readGerarchie() {
@@ -80,11 +58,11 @@ public class JsonUtil {
         Gerarchia gerarchia;
         try {
             Reader reader;
-            if(JsonUtil.createListOfFile() == null){
+            if (JsonUtil.createListOfFile() == null) {
                 return null;
             }
-            for (String file : JsonUtil.createListOfFile()) {
-                reader = Files.newBufferedReader(Paths.get(file));
+            for (Path file : JsonUtil.createListOfFile()) {
+                reader = Files.newBufferedReader(file);
                 Gson gson = new Gson();
                 // convert JSON file to Gerarchia
                 gerarchia = gson.fromJson(reader, Gerarchia.class);
@@ -95,18 +73,20 @@ public class JsonUtil {
         }
         return gerarchiaList;
     }
-    public static boolean checkNomeGerarchiaRipetuto(String nome){
+
+    public static boolean checkNomeGerarchiaRipetuto(String nome) {
         List<Gerarchia> gerarchiaList = JsonUtil.readGerarchie();
-        for(Gerarchia g: gerarchiaList){
-            if(g.getCategoriaRadice().getNome().equalsIgnoreCase(nome)){
+        for (Gerarchia g : gerarchiaList) {
+            if (g.getCategoriaRadice().getNome().equalsIgnoreCase(nome)) {
                 return true;
             }
         }
         return false;
     }
-    public static boolean checkNomeCategoriaRipetuto(String nome){
+
+    public static boolean checkNomeCategoriaRipetuto(String nome) {
         List<Gerarchia> gerarchiaList = JsonUtil.readGerarchie();
-        for(Gerarchia g: gerarchiaList){
+        for (Gerarchia g : gerarchiaList) {
             return g.nomeRipetuto(nome);
         }
         return false;

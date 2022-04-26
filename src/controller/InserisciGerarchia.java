@@ -66,6 +66,11 @@ public class InserisciGerarchia implements Action {
             }
         }
         int scelta = menu.scegli();
+        System.out.println("Hai scelto " );
+        String nomeCat = InputDati.leggiStringaNonVuota("");
+        if(scelta == 0){
+            //radice.addFiglio(new);
+        }
     }
 
     private void addCampiNativi(ArrayList<CampoNativo> campi) {

@@ -39,5 +39,7 @@ public class MyMenu {
         System.out.println(CORNICE);
         System.out.println();
     }
-
+    public void addVoce (String voce){
+        this.voci.add(voce);
+    }
 }

@@ -3,7 +3,7 @@ package model.structure;
 public class Gerarchia {
     private final Categoria categoriaRadice;
 
-    public Gerarchia(Categoria categoria) {
+    public Gerarchia(CategoriaPadre categoria) {
         this.categoriaRadice = categoria;
     }
 

@@ -26,6 +26,22 @@ public class CategoriaPadre extends Categoria {
     }
 
     public List<Categoria> getFigli(){
-        return this.figli;
+        if (this.figli == null){
+            for(Categoria cat : this.figli){
+                return cat.getPadre().getFigli();
+            }
+        }
+        return null;
     }
+
+    public List<CategoriaPadre> getPadreList(){
+        ArrayList<CategoriaPadre> padri = new ArrayList<CategoriaPadre>();
+        for(Categoria c: this.figli){
+            if(c instanceof CategoriaPadre)
+                padri.add((CategoriaPadre) c);
+        }
+        return padri;
+    }
+
+
 }

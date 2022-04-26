@@ -1,10 +1,12 @@
 package controller;
 
+import model.structure.Categoria;
 import utility.JsonUtil;
 import utility.InputDati;
 import model.structure.CampoNativo;
 import model.structure.CategoriaPadre;
 import model.structure.Gerarchia;
+import utility.MyMenu;
 
 import java.util.ArrayList;
 
@@ -18,25 +20,55 @@ public class InserisciGerarchia implements Action {
     private void inserisciGerarchia() {
         //nome gerarchia
         String nomeGerarchia = setNomeGerarchia();
-        //descrizione
-        String descrizione = InputDati.leggiStringaNonVuota("Inserire descrizione: ");
-        //aggiunta campi nativi
-        ArrayList<CampoNativo> campi = addCampiNativi();
-        //creo nuova gerarchia
-        Gerarchia gerarchia = new Gerarchia(new CategoriaPadre(nomeGerarchia, descrizione, campi, null));
 
-        boolean save = InputDati.yesOrNo("Vuoi salvare la gerarchia inserita?");
+        //descrizione della gerarchia
+        String descrizione = InputDati.leggiStringaNonVuota("Inserire descrizione: ");
+
+        //aggiunta campi nativi  /////da ripensare pure questo
+        //meglio aggiungere solo i campi standard e chiedere dopo per quelli aggiuntivi o sia prima che dopo?
+        ArrayList<CampoNativo> campi = new ArrayList<>();
+        //campi nativi sempre presenti
+        campi.add(new CampoNativo("Stato di conservazione", true));
+        campi.add(new CampoNativo("Descrizione libera", false));
+        //aggiunta altri campi nativi
+        this.addCampiNativi(campi);
+
+        //creo nuova gerarchia (categoria radice)
+        CategoriaPadre radice = new CategoriaPadre(nomeGerarchia, descrizione, campi, null);
+        Gerarchia gerarchia = new Gerarchia(radice);
+
+        //creazione categorie figlie
+        boolean addFiglie = InputDati.yesOrNo("Vuoi proseguire con l'inserimento di categorie figlie?\n");
+        if (addFiglie) {
+            this.inserisciFigli(radice);
+        }
+
+        //visualizzare un riepilogo prima di chiedere il salvataggio
+        System.out.println("Vuoi salvare la gerarchia inserita? \nRiepilogo:\n");
+        System.out.println(gerarchia);
+        boolean save = InputDati.yesOrNo("");
+
         if (save) {
             JsonUtil.writeGerarchia(gerarchia);
             System.out.println("salvato");
         }
     }
 
-    private ArrayList<CampoNativo> addCampiNativi(){
-        ArrayList<CampoNativo> campi = new ArrayList<>();
-        //campi nativi sempre presenti
-        campi.add(new CampoNativo("Stato di conservazione", true));
-        campi.add(new CampoNativo("Descrizione libera", false));
+    private void inserisciFigli(CategoriaPadre radice) {
+        MyMenu menu = new MyMenu("Seleziona categoria padre");
+        if (radice.getFigli() == null) {
+            menu.addVoce(radice.getNome());
+        } else {
+            for (Categoria c : radice.getFigli()) {
+                if (c.isPadre()) {
+                    menu.addVoce(c.getNome());
+                }
+            }
+        }
+        int scelta = menu.scegli();
+    }
+
+    private void addCampiNativi(ArrayList<CampoNativo> campi) {
         //inserimento campi nativi
         boolean decisione = false;
         do {
@@ -48,22 +80,19 @@ public class InserisciGerarchia implements Action {
             } else
                 decisione = true;
         } while (!decisione);
-
-        return campi;
     }
 
     private String setNomeGerarchia() {
         boolean exitNomeRipetuto = true;
         String nomeGerarchia;
-        do{
+        do {
             nomeGerarchia = InputDati.leggiStringaNonVuota("Inserire nome gerarchia: ");
-            if(!JsonUtil.checkNomeGerarchiaRipetuto(nomeGerarchia)){
+            if (!JsonUtil.checkNomeGerarchiaRipetuto(nomeGerarchia)) {
                 exitNomeRipetuto = false;
-            }
-            else {
+            } else {
                 System.out.println("Nome della gerarchia già presente!");
             }
-        }while (exitNomeRipetuto);
+        } while (exitNomeRipetuto);
         return nomeGerarchia;
     }
 }

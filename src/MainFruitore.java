@@ -1,9 +1,9 @@
 import controller.LoginFruit;
 import controller.Logout;
-import model.Action;
-import model.ExitException;
+import controller.Action;
+import controller.ExitException;
 import model.OptionList;
-import mylib.MyMenu;
+import utility.MyMenu;
 
 public class MainFruitore {
     public static void main(String[] args) {

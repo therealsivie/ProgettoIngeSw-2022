@@ -1,10 +1,8 @@
 package controller;
 
-import data.JsonUtil;
-import model.Action;
-import structure.Gerarchia;
+import utility.JsonUtil;
+import model.structure.Gerarchia;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class VisualizzaGerarchie implements Action {

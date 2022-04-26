@@ -19,11 +19,8 @@ public class OptionList {
         voci.add(new Option("Logout", new Logout()));
         voci.add(new Option("Visualizza Gerarchie", new VisualizzaGerarchie()));
         voci.add(new Option("Inserisci Gerarchia", new InserisciGerarchia()));
+        voci.add(new Option("Aggiungi Scambio", new InserisciScambio()));
     }
-
-
-
-
     public ArrayList<String> getConfOptionList(boolean logged){
         if(logged){
             this.setLoggedOptionConf();
@@ -37,12 +34,9 @@ public class OptionList {
         }
         return temp;
     }
-
     public Option getOption(int n){
         return voci.get(n);
     }
-
-
     public ArrayList<String> getFruitOptionList(boolean logged) {
         if (logged)
             this.setLoggedOptionFruit();
@@ -54,13 +48,11 @@ public class OptionList {
         }
         return temp;
     }
-
     private void setOptionFruit() {
         voci.clear();
         voci.add(new Option("Esci", new Exit()));
         voci.add(new Option("Login", new LoginFruit()));
     }
-
     private void setLoggedOptionFruit() {
         voci.clear();
         voci.add(new Option("Esci", new Exit()));

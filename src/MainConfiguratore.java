@@ -1,10 +1,9 @@
 import controller.Logout;
-import model.Action;
-import model.ExitException;
+import controller.Action;
+import controller.ExitException;
 import controller.LoginConf;
-import model.Option;
 import model.OptionList;
-import mylib.MyMenu;
+import utility.MyMenu;
 
 public class MainConfiguratore {
     public static void main(String[] args) {

@@ -66,4 +66,10 @@ public class Categoria {
         }
         return false;
     }
+
+    public CategoriaPadre get(String nomeCatPadre) {
+        if(nomeCatPadre.equals(this.getNome()))
+            return (CategoriaPadre) this;
+        return null;
+    }
 }

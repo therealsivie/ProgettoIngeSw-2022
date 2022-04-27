@@ -1,7 +1,7 @@
 package model.structure;
 
 public class Gerarchia {
-    private final Categoria categoriaRadice;
+    private CategoriaPadre categoriaRadice;
 
     public Gerarchia(CategoriaPadre categoria) {
         this.categoriaRadice = categoria;

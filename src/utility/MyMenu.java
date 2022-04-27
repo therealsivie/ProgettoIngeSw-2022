@@ -42,4 +42,8 @@ public class MyMenu {
     public void addVoce (String voce){
         this.voci.add(voce);
     }
+
+    public String getVoce(int scelta) {
+        return voci.get(scelta);
+    }
 }

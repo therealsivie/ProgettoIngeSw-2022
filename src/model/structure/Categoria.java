@@ -7,6 +7,7 @@ public class Categoria {
     private String descrizione;
     private ArrayList<CampoNativo> campi = null;
     private CategoriaPadre padre = null;
+
     public String getNome() {
         return nome;
     }
@@ -28,48 +29,51 @@ public class Categoria {
     }
 
     public void addCampo(CampoNativo campoNativo) {
-        if(this.campi == null){
+        if (this.campi == null) {
             campi = new ArrayList<>();
         }
         this.campi.add(campoNativo);
     }
 
-    public void setFather(CategoriaPadre padre){
+    public void setFather(CategoriaPadre padre) {
         this.padre = padre;
     }
 
-    public CategoriaPadre getPadre(){
+    public CategoriaPadre getPadre() {
         return this.padre;
     }
 
-    public boolean isPadre(){
-        return this.padre == null;
-    }
-
-    public String toString(){
-        StringBuilder str = new StringBuilder();
-        str.append("Nome: ").append(nome)
-                .append("\nDescrizione: ").append(descrizione);
-        for (CampoNativo c: campi){
-            str.append("\nNome campo: ").append(c.getNomeCampo())
-                    .append(c.isRequired()? "": "\t(opzionale)");
-        }
-        str.append("\n");
-        return str.toString();
-    }
-
     public boolean checkNomeRipetuto(String nome) {
-        for (Categoria c: padre.getFigli()){
-            if(c.getNome().equalsIgnoreCase(nome)){
+        for (Categoria c : padre.getFigli()) {
+            if (c.getNome().equalsIgnoreCase(nome)) {
                 return true;
             }
         }
         return false;
     }
 
-    public CategoriaPadre get(String nomeCatPadre) {
-        if(nomeCatPadre.equals(this.getNome()))
+    public CategoriaPadre getPadreByNome(String nomeCatPadre) {
+        if (nomeCatPadre.equals(this.getNome()))
             return (CategoriaPadre) this;
         return null;
+    }
+
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        str.append("Nome: ").append(this.getNome())
+                .append("\nDescrizione: ").append(this.getDescrizione());
+        if(campi == null)
+            return str.toString();
+        else {
+            for (CampoNativo c : this.getCampi()) {
+                str.append("\nNome campo: ").append(c.getNomeCampo())
+                        .append(c.isRequired() ? "" : "\t(opzionale)");
+            }
+            return str.toString();
+        }
+    }
+
+    public void setCampi(ArrayList<CampoNativo> campi) {
+        this.campi = campi;
     }
 }

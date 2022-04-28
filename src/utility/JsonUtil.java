@@ -2,6 +2,7 @@ package utility;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import model.structure.Categoria;
 import model.structure.Gerarchia;
 
 import java.io.*;
@@ -77,7 +78,7 @@ public class JsonUtil {
     public static boolean checkNomeGerarchiaRipetuto(String nome) {
         List<Gerarchia> gerarchiaList = JsonUtil.readGerarchie();
         for (Gerarchia g : gerarchiaList) {
-            if (g.getCategoriaRadice().getNome().equalsIgnoreCase(nome)) {
+            if (g.getNomeRadice().equalsIgnoreCase(nome)) {
                 return true;
             }
         }
@@ -91,4 +92,5 @@ public class JsonUtil {
         }
         return false;
     }
+
 }

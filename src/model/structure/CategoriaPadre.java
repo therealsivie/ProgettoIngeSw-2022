@@ -16,7 +16,7 @@ public class CategoriaPadre extends Categoria {
     }
 
     public void addFiglio(Categoria figlio) {
-        figlio.setFather(this);
+        //figlio.setFather(this);
         if (this.figli == null)
             this.figli = new ArrayList<>();
         this.figli.add(figlio);
@@ -30,7 +30,10 @@ public class CategoriaPadre extends Categoria {
     public List<Categoria> getFigli() {
         if (this.figli != null) {
             for (Categoria cat : this.figli) {
-                return cat.getPadre().getFigli();
+                if(cat instanceof CategoriaPadre)
+                    return ((CategoriaPadre) cat).getFigli();
+                else
+                    return null;
             }
         }
         return null;
@@ -53,7 +56,7 @@ public class CategoriaPadre extends Categoria {
             struttura.add(this);
             return struttura;
         }
-        for (Categoria c : this.figli) {
+        for (Categoria c : this.getFigli()) {
             if (c instanceof CategoriaPadre)
                 struttura.addAll(((CategoriaPadre) c).getStrutturaCompleta());
             else
@@ -64,5 +67,19 @@ public class CategoriaPadre extends Categoria {
 
     public Categoria getFiglio(Categoria boh2) {
         return null;
+    }
+
+    public String toString(){
+        StringBuilder str = new StringBuilder();
+        str.append("\nNome: ").append(this.getNome())
+                .append("\nDescrizione: ").append(this.getDescrizione());
+        for (CampoNativo c: this.getCampi()){
+            str.append("\nNome campo: ").append(c.getNomeCampo())
+                    .append(c.isRequired()? "": "\t(opzionale)");
+        }
+        for (Categoria cat: this.figli){
+            str.append(cat.toString());
+        }
+        return str.toString();
     }
 }

@@ -5,75 +5,98 @@ import java.util.ArrayList;
 public class Categoria {
     private String nome;
     private String descrizione;
-    private ArrayList<CampoNativo> campi = null;
-    private CategoriaPadre padre = null;
+    private ArrayList<CampoNativo> campi;
+    private ArrayList<Categoria> figli;
+    private String padre;
+
+    public Categoria(String nome, String descrizione, ArrayList<CampoNativo> campi, String padre) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.campi = new ArrayList<>();
+        this.campi.addAll(campi);
+        this.padre = padre;
+    }
+
+
+    public void addSingoloCampo(CampoNativo campo) {
+        if (this.campi == null)
+            this.campi = new ArrayList<>();
+        this.campi.add(campo);
+    }
+
+    public void addCampi(ArrayList<CampoNativo> campi) {
+        if (this.campi == null)
+            this.campi = new ArrayList<>();
+        this.campi.addAll(campi);
+    }
 
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public String getPadre() {
+        return padre;
     }
 
-    public String getDescrizione() {
-        return descrizione;
+    public boolean isRadice() {
+        return padre == null;
     }
 
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
+    public boolean isFoglia() {
+        return figli == null;
     }
 
-    public ArrayList<CampoNativo> getCampi() {
-        return campi;
+    public void addSingoloFiglio(Categoria figlia) {
+        if (this.figli == null)
+            this.figli = new ArrayList<>();
+        this.figli.add(figlia);
     }
 
-    public void addCampo(CampoNativo campoNativo) {
-        if (this.campi == null) {
-            campi = new ArrayList<>();
+    public void addFigli(ArrayList<Categoria> figliIns) {
+        if (this.figli == null)
+            this.figli = new ArrayList<>();
+        this.figli.addAll(figliIns);
+    }
+
+    public int getSizeFigli() {
+        return this.figli.size();
+    }
+
+    public ArrayList<String> getStrutturaCompleta() {
+        ArrayList<String> strutturaCompleta = new ArrayList<>();
+        if(this.isFoglia()){
+            strutturaCompleta.add(this.getNome());
+            return strutturaCompleta;
         }
-        this.campi.add(campoNativo);
-    }
-
-    public void setFather(CategoriaPadre padre) {
-        this.padre = padre;
-    }
-
-    public CategoriaPadre getPadre() {
-        return this.padre;
-    }
-
-    public boolean checkNomeRipetuto(String nome) {
-        for (Categoria c : padre.getFigli()) {
-            if (c.getNome().equalsIgnoreCase(nome)) {
-                return true;
-            }
+        for (Categoria c : this.figli) {
+            if (!isFoglia())
+                strutturaCompleta.addAll(c.getStrutturaCompleta());
+            else
+                strutturaCompleta.add(c.getNome());
         }
-        return false;
+        return strutturaCompleta;
     }
 
-    public CategoriaPadre getPadreByNome(String nomeCatPadre) {
-        if (nomeCatPadre.equals(this.getNome()))
-            return (CategoriaPadre) this;
+    public Categoria getCategoriaByNome(String nomeCatSelezionata) {
+        if (isFoglia())
+            return this;
+        if (!isFoglia())
+            for (Categoria cat : this.figli)
+                if (cat.getNome().equals(nomeCatSelezionata))
+                    return this;
+        if (isRadice())
+            return this;
         return null;
     }
 
+    @Override
     public String toString() {
-        StringBuilder str = new StringBuilder();
-        str.append("Nome: ").append(this.getNome())
-                .append("\nDescrizione: ").append(this.getDescrizione());
-        if(campi == null)
-            return str.toString();
-        else {
-            for (CampoNativo c : this.getCampi()) {
-                str.append("\nNome campo: ").append(c.getNomeCampo())
-                        .append(c.isRequired() ? "" : "\t(opzionale)");
-            }
-            return str.toString();
-        }
-    }
-
-    public void setCampi(ArrayList<CampoNativo> campi) {
-        this.campi = campi;
+        return "Categoria{" +
+                "nome='" + nome + '\'' +
+                ", descrizione='" + descrizione + '\'' +
+                ", campi=" + campi +
+                ", figli=" + figli +
+                ", padre='" + padre + '\'' +
+                '}';
     }
 }

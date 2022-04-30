@@ -16,7 +16,6 @@ import java.util.stream.Stream;
 
 public class JsonUtil {
     private final static String directory = "files/gerarchie/";
-    private final static String dataName = "files/gerarchie/gerarchia";
 
     private static long getNumFile() {
         long count = 0;
@@ -32,8 +31,7 @@ public class JsonUtil {
     public static void writeGerarchia(Gerarchia gerarchia) {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        long numFile = JsonUtil.getNumFile();
-        String nomeFile = dataName + numFile + ".json";
+        String nomeFile = directory + gerarchia.getNomeRadice() + ".json";
         try (
                 FileWriter writer = new FileWriter(nomeFile)
         ) {
@@ -84,13 +82,4 @@ public class JsonUtil {
         }
         return false;
     }
-
-    public static boolean checkNomeCategoriaRipetuto(String nome) {
-        List<Gerarchia> gerarchiaList = JsonUtil.readGerarchie();
-        for (Gerarchia g : gerarchiaList) {
-            return g.nomeRipetuto(nome);
-        }
-        return false;
-    }
-
 }

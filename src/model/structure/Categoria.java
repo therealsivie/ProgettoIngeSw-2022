@@ -13,15 +13,22 @@ public class Categoria {
         this.nome = nome;
         this.descrizione = descrizione;
         this.campi = new ArrayList<>();
-        this.campi.addAll(campi);
+        if (campi != null)
+            this.campi.addAll(campi);
+        else
+            this.campi = campi;
         this.padre = padre;
     }
 
 
-    public void addSingoloCampo(CampoNativo campo) {
+    public boolean addSingoloCampo(CampoNativo campo) {
         if (this.campi == null)
             this.campi = new ArrayList<>();
-        this.campi.add(campo);
+        if (!this.checkCampoRipetuto(campo.getNome())) {
+            this.campi.add(campo);
+            return true;
+        } else
+            return false;
     }
 
     public void addCampi(ArrayList<CampoNativo> campi) {
@@ -78,15 +85,14 @@ public class Categoria {
     }
 
     public Categoria getCategoriaByNome(String nomeCatSelezionata) {
-        if (isFoglia())
-            return this;
-        if (!isFoglia())
-            for (Categoria cat : this.figli)
-                if (cat.getNome().equals(nomeCatSelezionata))
-                    return this;
-        if (isRadice())
-            return this;
-        return null;
+        Categoria cat = null;
+        if (this.nome.equals(nomeCatSelezionata))
+            cat = this;
+        if (figli != null) {
+            for (Categoria categoria : this.figli)
+                cat = categoria.getCategoriaByNome(nomeCatSelezionata);
+        }
+        return cat;
     }
 
     @Override
@@ -106,12 +112,33 @@ public class Categoria {
         return str.toString();
     }
 
-    public String printFiglio(){
+    public String printFiglio() {
         StringBuilder str = new StringBuilder();
         str.append("\n\tNome: ").append(nome)
                 .append("\n\tDescizione: ").append(descrizione);
         if (this.campi != null)
             str.append("");
         return str.toString();
+    }
+
+    public boolean checkCampoRipetuto(String nomeCampo) {
+        if (isRadice()) {
+            for (CampoNativo campo : this.campi) {
+                if (campo.getNome().equals(nomeCampo))
+                    return true;
+            }
+        } else {
+            Categoria padre = this.getCategoriaByNome(this.getPadre());
+            if (campi != null) {
+                for (CampoNativo campo : this.campi) {
+                    if (campo.getNome().equals(nomeCampo))
+                        return true;
+                }
+            }
+            else return false;
+            padre.checkCampoRipetuto(nomeCampo);
+        }
+
+        return false;
     }
 }

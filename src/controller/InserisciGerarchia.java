@@ -18,13 +18,17 @@ public class InserisciGerarchia implements Action {
         String nome = this.inserisciNome();
         String descrizione = InputDati.leggiStringaNonVuota("Inserisci descrizione categoria: ");
         ArrayList<CampoNativo> campi = new ArrayList<>();
+
         //aggiunta campi obbligatori
         campi.add(new CampoNativo("Stato di conservazione", true));
         campi.add(new CampoNativo("Descrizione libera", false));
-        //aggiunta campi da parte dell'utente
-        campi.addAll(aggiungiCampi());
 
+        //aggiunta campi da parte dell'utente
         Categoria radice = new Categoria(nome, descrizione, campi, null);
+
+        this.aggiungiCampi(radice);
+
+
 
         //inserimento categorie figlie
         boolean inserimentoMinimo = false;
@@ -34,7 +38,7 @@ public class InserisciGerarchia implements Action {
             int catInserite = 0;
             boolean inserisciCat = true;
             do {
-                padre.addSingoloFiglio(this.inserisciFiglio(catInserite+1, padre.getNome()));
+                padre.addSingoloFiglio(this.inserisciFiglio(catInserite+1, padre));
                 catInserite++;
                 if (catInserite >= 2) {
                     inserisciCat = InputDati.yesOrNo("Vuoi proseguire nell'inserimento di una sottocategoria di "+padre.getNome()+" ?");
@@ -64,26 +68,45 @@ public class InserisciGerarchia implements Action {
         return nome;
     }
 
-    private ArrayList<CampoNativo> aggiungiCampi() {
+    private CampoNativo inserisciCampo(){
+        String nomeCampo = InputDati.leggiStringaNonVuota("Nome campo nativo: ");;
+        boolean obbligatorio = InputDati.yesOrNo("Il campo è obbligatorio? ");
+        return new CampoNativo(nomeCampo, obbligatorio);
+    }
+
+    private void aggiungiCampi(Categoria categoria){
+        boolean campoOk = false;
+        boolean esci = false;
+        do{
+            CampoNativo campoNativo = inserisciCampo();
+            if(categoria.checkCampoRipetuto(campoNativo.getNome()))
+                System.out.println("Nome campo ripetuto");
+            else
+                categoria.addSingoloCampo(campoNativo);
+            esci = InputDati.yesOrNo("Vuoi inserire campi nativi? ");
+        }while (esci);
+    }
+
+    /*
+    private ArrayList<CampoNativo> aggiungiCampi(Categoria padre) {
         ArrayList<CampoNativo> campi = new ArrayList<>();
         //inserimento campi nativi
         boolean decisione = false;
+        boolean campoOk = false;
         do {
-            boolean insCampiNat = InputDati.yesOrNo("Vuoi inserire campi nativi? ");
-            if (insCampiNat) {
-                String nomeCampo = InputDati.leggiStringaNonVuota("Nome campo nativo: ");
-                //controllo campo
+            boolean insCampiNativi = InputDati.yesOrNo("Vuoi inserire campi nativi? ");
+            String nomeCampo;
+            if (insCampiNativi) {
+                nomeCampo =
                 boolean obbligatorio = InputDati.yesOrNo("Il campo è obbligatorio? ");
                 campi.add(new CampoNativo(nomeCampo, obbligatorio));
             } else
                 decisione = true;
         } while (!decisione);
-        if(campi.size() == 0)
-            return null;
         return campi;
     }
 
-
+    */
     private Categoria scegliPadre(Categoria radice) {
         MyMenu menu = new MyMenu("Scelta categoria padre");
         ArrayList<String> voci = radice.getStrutturaCompleta();
@@ -93,12 +116,26 @@ public class InserisciGerarchia implements Action {
         return radice.getCategoriaByNome(nomeCatSelezionata);
     }
 
-    private Categoria inserisciFiglio(int num, String padre) {
+    private Categoria inserisciFiglio(int num, Categoria padre) {
         String nome = InputDati.leggiStringaNonVuota("nome sottocategoria " + num + ": ");
         //controllo del campo
         String descrizione = InputDati.leggiStringaNonVuota("descrizione: ");
         ArrayList<CampoNativo> campi = new ArrayList<>();
-        campi = aggiungiCampi();
-        return new Categoria(nome, descrizione, campi, padre);
+        Categoria figlio = new Categoria(nome, descrizione, null, padre.getNome());
+        this.aggiungiCampi(figlio);
+        return figlio;
     }
 }
+
+/*
+if(padre == null)
+                    nomeCampo = InputDati.leggiStringaNonVuota("Nome campo nativo: ");
+                else{
+                    Categoria antenato = padre;
+                    do{
+                        nomeCampo = InputDati.leggiStringaNonVuota("Nome campo nativo: ");
+                        antenato = padre.getCategoriaByNome(padre.getPadre());
+                        campoOk = antenato.checkCampoRipetuto(nomeCampo);
+                    }while (antenato != null && campoOk);
+                }
+ */

@@ -72,11 +72,14 @@ public class InserisciGerarchia implements Action {
             boolean insCampiNat = InputDati.yesOrNo("Vuoi inserire campi nativi? ");
             if (insCampiNat) {
                 String nomeCampo = InputDati.leggiStringaNonVuota("Nome campo nativo: ");
+                //controllo campo
                 boolean obbligatorio = InputDati.yesOrNo("Il campo è obbligatorio? ");
                 campi.add(new CampoNativo(nomeCampo, obbligatorio));
             } else
                 decisione = true;
         } while (!decisione);
+        if(campi.size() == 0)
+            return null;
         return campi;
     }
 
@@ -92,6 +95,7 @@ public class InserisciGerarchia implements Action {
 
     private Categoria inserisciFiglio(int num, String padre) {
         String nome = InputDati.leggiStringaNonVuota("nome sottocategoria " + num + ": ");
+        //controllo del campo
         String descrizione = InputDati.leggiStringaNonVuota("descrizione: ");
         ArrayList<CampoNativo> campi = new ArrayList<>();
         campi = aggiungiCampi();

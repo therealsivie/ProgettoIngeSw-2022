@@ -15,4 +15,8 @@ public class Gerarchia {
     public String toString() {
         return radice.toString();
     }
+
+    public void printGerarchia(){
+        System.out.println(this);
+    }
 }

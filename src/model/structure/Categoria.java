@@ -64,7 +64,7 @@ public class Categoria {
 
     public ArrayList<String> getStrutturaCompleta() {
         ArrayList<String> strutturaCompleta = new ArrayList<>();
-        if(this.isFoglia()){
+        if (this.isFoglia()) {
             strutturaCompleta.add(this.getNome());
             return strutturaCompleta;
         }
@@ -91,12 +91,27 @@ public class Categoria {
 
     @Override
     public String toString() {
-        return "Categoria{" +
-                "nome='" + nome + '\'' +
-                ", descrizione='" + descrizione + '\'' +
-                ", campi=" + campi +
-                ", figli=" + figli +
-                ", padre='" + padre + '\'' +
-                '}';
+        StringBuilder str = new StringBuilder();
+        str.append("\nNome: ").append(nome)
+                .append("\nDescrizione: ").append(descrizione)
+                .append("\nCampi:");
+        for (CampoNativo cmp : this.campi) {
+            str.append(cmp.toString());
+        }
+        if (!isFoglia()) {
+            str.append("\nFigli:");
+            for (Categoria cat : this.figli)
+                str.append("\t").append(cat.toString());
+        }
+        return str.toString();
+    }
+
+    public String printFiglio(){
+        StringBuilder str = new StringBuilder();
+        str.append("\n\tNome: ").append(nome)
+                .append("\n\tDescizione: ").append(descrizione);
+        if (this.campi != null)
+            str.append("");
+        return str.toString();
     }
 }

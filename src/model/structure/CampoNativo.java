@@ -22,9 +22,11 @@ public class CampoNativo {
     }
     @Override
     public String toString() {
-        return "CampoNativo{" +
-                "nomeCampo='" + nomeCampo + '\'' +
-                ", required=" + required +
-                '}';
+        StringBuilder str = new StringBuilder();
+        str.append("\n\t\t").append(nomeCampo);
+        if(!isRequired())
+            str.append(" (opzionale)");
+        return str.toString();
     }
+
 }

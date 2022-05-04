@@ -25,11 +25,8 @@ public class InserisciGerarchia implements Action {
 
         //aggiunta campi da parte dell'utente
         Categoria radice = new Categoria(nome, descrizione, campi, null);
-
-        this.aggiungiCampi(radice);
-
-
-
+        //aggiunta campi categoria radice
+        this.aggiungiCampi(radice, radice);
         //inserimento categorie figlie
         boolean inserimentoMinimo = false;
         do {
@@ -38,7 +35,7 @@ public class InserisciGerarchia implements Action {
             int catInserite = 0;
             boolean inserisciCat = true;
             do {
-                padre.addSingoloFiglio(this.inserisciFiglio(catInserite+1, padre));
+                this.inserisciFiglio(catInserite+1, padre, radice);
                 catInserite++;
                 if (catInserite >= 2) {
                     inserisciCat = InputDati.yesOrNo("Vuoi proseguire nell'inserimento di una sottocategoria di "+padre.getNome()+" ?");
@@ -54,7 +51,6 @@ public class InserisciGerarchia implements Action {
             System.out.println("salvato");
         }
     }
-
     private String inserisciNome() {
         boolean nomeRipetuto = true;
         String nome;
@@ -67,75 +63,55 @@ public class InserisciGerarchia implements Action {
         }while(nomeRipetuto);
         return nome;
     }
-
-    private CampoNativo inserisciCampo(){
-        String nomeCampo = InputDati.leggiStringaNonVuota("Nome campo nativo: ");;
-        boolean obbligatorio = InputDati.yesOrNo("Il campo è obbligatorio? ");
-        return new CampoNativo(nomeCampo, obbligatorio);
-    }
-
-    private void aggiungiCampi(Categoria categoria){
-        boolean campoOk = false;
-        boolean esci = false;
+    private void aggiungiCampi(Categoria radice, Categoria categoria){
+        boolean inserisci = false;
         do{
-            CampoNativo campoNativo = inserisciCampo();
-            if(categoria.checkCampoRipetuto(campoNativo.getNome()))
-                System.out.println("Nome campo ripetuto");
-            else
-                categoria.addSingoloCampo(campoNativo);
-            esci = InputDati.yesOrNo("Vuoi inserire campi nativi? ");
-        }while (esci);
-    }
-
-    /*
-    private ArrayList<CampoNativo> aggiungiCampi(Categoria padre) {
-        ArrayList<CampoNativo> campi = new ArrayList<>();
-        //inserimento campi nativi
-        boolean decisione = false;
-        boolean campoOk = false;
-        do {
-            boolean insCampiNativi = InputDati.yesOrNo("Vuoi inserire campi nativi? ");
-            String nomeCampo;
-            if (insCampiNativi) {
-                nomeCampo =
+            inserisci = InputDati.yesOrNo("Vuoi inserire un campo? ");
+            if (inserisci){
+                boolean ripetuto = true;
+                String nomeCampo;
+                do{
+                    nomeCampo = InputDati.leggiStringaNonVuota("Inserisci campo nativo: ");
+                    ripetuto = categoria.checkCampoRipetuto(nomeCampo);
+                    if (ripetuto)
+                        System.out.println("ATTENZIONE: campo già inserito");
+                }while (ripetuto);
                 boolean obbligatorio = InputDati.yesOrNo("Il campo è obbligatorio? ");
-                campi.add(new CampoNativo(nomeCampo, obbligatorio));
-            } else
-                decisione = true;
-        } while (!decisione);
-        return campi;
+                categoria.addSingoloCampo(new CampoNativo(nomeCampo, obbligatorio));
+            }
+        }while (inserisci);
     }
-
-    */
     private Categoria scegliPadre(Categoria radice) {
         MyMenu menu = new MyMenu("Scelta categoria padre");
-        ArrayList<String> voci = radice.getStrutturaCompleta();
+        ArrayList<Categoria> categorie = radice.getStrutturaCompleta();
+        ArrayList<String> voci = new ArrayList<>();
+        for(Categoria cat: categorie)
+            voci.add(cat.getNome());
         menu.setVoci(voci);
         String nomeCatSelezionata = voci.get(menu.scegli());
         //restituisce la categoria scelta nel menu (quella di cui si vuole inserire dei figli (almeno 2))
-        return radice.getCategoriaByNome(nomeCatSelezionata);
+        for(Categoria cat: categorie)
+            if(cat.getNome().equals(nomeCatSelezionata))
+                return cat;
+        return null;
     }
 
-    private Categoria inserisciFiglio(int num, Categoria padre) {
-        String nome = InputDati.leggiStringaNonVuota("nome sottocategoria " + num + ": ");
-        //controllo del campo
+    private void inserisciFiglio(int num, Categoria padre, Categoria radice) {
+        boolean nomeRipetuto = true;
+        String nome;
+        do {
+            nome = InputDati.leggiStringaNonVuota("nome sottocategoria " + num + ": ");
+            nomeRipetuto = radice.checkNomeRipetuto(nome);
+            if(nomeRipetuto){
+                System.out.println("Attenzione: nome categoria già presente all'interno della gerarchia");
+            }
+            //controllo nome padre
+        }while (nomeRipetuto);
         String descrizione = InputDati.leggiStringaNonVuota("descrizione: ");
-        ArrayList<CampoNativo> campi = new ArrayList<>();
-        Categoria figlio = new Categoria(nome, descrizione, null, padre.getNome());
-        this.aggiungiCampi(figlio);
-        return figlio;
+        //creazione nuovo figlio
+        Categoria figlio = new Categoria(nome, descrizione, padre.getCampi(), padre.getNome());
+        this.aggiungiCampi(radice, figlio);
+        //aggiungo figlio alla categoria padre
+        padre.addSingoloFiglio(figlio);
     }
 }
-
-/*
-if(padre == null)
-                    nomeCampo = InputDati.leggiStringaNonVuota("Nome campo nativo: ");
-                else{
-                    Categoria antenato = padre;
-                    do{
-                        nomeCampo = InputDati.leggiStringaNonVuota("Nome campo nativo: ");
-                        antenato = padre.getCategoriaByNome(padre.getPadre());
-                        campoOk = antenato.checkCampoRipetuto(nomeCampo);
-                    }while (antenato != null && campoOk);
-                }
- */

@@ -16,17 +16,6 @@ import java.util.stream.Stream;
 public class JsonUtil {
     private final static String directory = "files/gerarchie/";
 
-    private static long getNumFile() {
-        long count = 0;
-        try (Stream<Path> files = Files.list(Paths.get(directory))) {
-            count = files.count();
-            System.out.println(count);
-        } catch (IOException e) {
-            System.out.println("Errore di sto cazzo");
-        }
-        return count;
-    }
-
     public static void writeGerarchia(Gerarchia gerarchia) {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
@@ -38,7 +27,6 @@ public class JsonUtil {
         } catch (IOException e) {
             System.out.println("Errore nel salvataggio della gerarchia");
         }
-
     }
 
     private static List<Path> createListOfFile() {
@@ -74,9 +62,11 @@ public class JsonUtil {
 
     public static boolean checkNomeGerarchiaRipetuto(String nome) {
         List<Gerarchia> gerarchiaList = JsonUtil.readGerarchie();
-        for (Gerarchia g : gerarchiaList) {
-            if (g.getNomeRadice().equalsIgnoreCase(nome)) {
-                return true;
+        if (gerarchiaList != null){
+            for (Gerarchia g : gerarchiaList) {
+                if (g.getNomeRadice().equalsIgnoreCase(nome)) {
+                    return true;
+                }
             }
         }
         return false;

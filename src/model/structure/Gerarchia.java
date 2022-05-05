@@ -1,7 +1,7 @@
 package model.structure;
 
 public class Gerarchia {
-    private Categoria radice;
+    private final Categoria radice;
 
     public Gerarchia(Categoria radice) {
         this.radice = radice;
@@ -11,12 +11,11 @@ public class Gerarchia {
         return this.radice.getNome();
     }
 
+    public Categoria getRadice(){
+        return this.radice;
+    }
     @Override
     public String toString() {
         return radice.toString();
-    }
-
-    public void printGerarchia(){
-        System.out.println(this);
     }
 }

@@ -1,17 +1,33 @@
 package controller;
 
+import model.structure.Categoria;
 import utility.JsonUtil;
 import model.structure.Gerarchia;
+import utility.MyMenu;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VisualizzaGerarchie implements Action {
     private void visualizza() {
         List<Gerarchia> gerarchiaList = JsonUtil.readGerarchie();
-        if (gerarchiaList != null) {
-            gerarchiaList.forEach(Gerarchia::printGerarchia);
-        } else
-            System.out.println("Non sono presenti gerarchie.");
+        if (gerarchiaList != null && gerarchiaList.size() != 0){
+            ArrayList<String> voci = new ArrayList<>();
+            for (Gerarchia gerarchia: gerarchiaList)
+                voci.add(gerarchia.getNomeRadice());
+            MyMenu menu = new MyMenu("Gerarchia da visualizzare");
+            menu.setVoci(voci);
+            //visualizzazione gerarchia
+            Gerarchia gerarchia = gerarchiaList.get(menu.scegli());
+            System.out.println("\nGerarchia: "+gerarchia.getNomeRadice());
+            Categoria radice = gerarchia.getRadice();
+            System.out.println("Descrizione: "+radice.getDescrizione());
+            System.out.println("Campi:");
+            radice.getCampi().forEach(System.out::println);
+            //scelta categorie figlie e visualizzazione
+
+        }else
+            System.out.println("\nNessuna gerarchia Inserita");
     }
 
     @Override

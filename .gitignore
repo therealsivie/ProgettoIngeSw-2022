@@ -23,3 +23,5 @@ hs_err_pid*
 
 # database file
 .db
+/out/artifacts/ProgettoIngeSw_2022_v1_jar/ProgettoIngeSw-2022.jar
+/Data.db

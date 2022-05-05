@@ -3,12 +3,11 @@ package model.structure;
 import java.util.ArrayList;
 
 public class Categoria {
-    private String nome;
-    private String descrizione;
+    private final String nome;
+    private final String descrizione;
     private ArrayList<CampoNativo> campi;
     private ArrayList<Categoria> figli;
-    private String padre;
-
+    private final String padre;
     public Categoria(String nome, String descrizione, ArrayList<CampoNativo> campi, String padre) {
         this.nome = nome;
         this.descrizione = descrizione;
@@ -19,46 +18,27 @@ public class Categoria {
             this.campi = campi;
         this.padre = padre;
     }
-
-
     public void addSingoloCampo(CampoNativo campo) {
         if (this.campi == null)
             this.campi = new ArrayList<>();
         this.campi.add(campo);
     }
-
-    public void addCampi(ArrayList<CampoNativo> campi) {
-        if (this.campi == null)
-            this.campi = new ArrayList<>();
-        this.campi.addAll(campi);
-    }
-
     public String getNome() {
         return nome;
     }
-
-    public String getPadre() {
-        return padre;
+    public String getDescrizione() {
+        return descrizione;
     }
-
     public boolean isRadice() {
         return padre == null;
     }
-
     public boolean isFoglia() {
         return figli == null;
     }
-
     public void addSingoloFiglio(Categoria figlia) {
         if (this.figli == null)
             this.figli = new ArrayList<>();
         this.figli.add(figlia);
-    }
-
-    public void addFigli(ArrayList<Categoria> figliIns) {
-        if (this.figli == null)
-            this.figli = new ArrayList<>();
-        this.figli.addAll(figliIns);
     }
 
     public ArrayList<CampoNativo> getCampi(){
@@ -98,15 +78,6 @@ public class Categoria {
         return str.toString();
     }
 
-    public String printFiglio() {
-        StringBuilder str = new StringBuilder();
-        str.append("\n\tNome: ").append(nome)
-                .append("\n\tDescizione: ").append(descrizione);
-        if (this.campi != null)
-            str.append("");
-        return str.toString();
-    }
-
     public boolean isCampoPresente(String nomeCampo) {
         if (this.campi != null)
             for (CampoNativo campo : this.campi)
@@ -116,9 +87,7 @@ public class Categoria {
     }
 
     public boolean checkCampoRipetuto(String nomeCampo) {
-        if (this.isCampoPresente(nomeCampo))
-            return true;
-        return false;
+        return this.isCampoPresente(nomeCampo);
     }
 
     public boolean checkNomeRipetuto(String nome) {

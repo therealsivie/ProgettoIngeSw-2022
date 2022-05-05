@@ -14,7 +14,7 @@ public class MainConfiguratore {
             menu.setVoci(option.getConfOptionList(logged));
             int scelta = menu.scegli();
             try {
-                Action action =option.getOption(scelta).getAction();
+                Action action = option.getOption(scelta).getAction();
                 if (action instanceof LoginConf || option.getOption(scelta).getAction() instanceof Logout)
                     logged = action.execute();
                 else

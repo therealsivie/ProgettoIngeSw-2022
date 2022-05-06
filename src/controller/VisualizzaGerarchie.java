@@ -17,6 +17,7 @@ public class VisualizzaGerarchie implements Action {
                 voci.add(gerarchia.getNomeRadice());
             MyMenu menu = new MyMenu("Gerarchia da visualizzare");
             menu.setVoci(voci);
+
             //visualizzazione gerarchia
             Gerarchia gerarchia = gerarchiaList.get(menu.scegli());
             System.out.println("\nGerarchia: "+gerarchia.getNomeRadice());
@@ -24,7 +25,23 @@ public class VisualizzaGerarchie implements Action {
             System.out.println("Descrizione: "+radice.getDescrizione());
             System.out.println("Campi:");
             radice.getCampi().forEach(System.out::println);
-            //scelta categorie figlie e visualizzazione
+
+            //visualizzazione sottocategorie della gerarchia selezionata
+            System.out.println("\nSottocategorie di "+gerarchia.getNomeRadice());
+            ArrayList<Categoria> sottocategorie = radice.getFigli();
+            for(Categoria sottocategoria: sottocategorie) {
+                System.out.println();
+                System.out.println("Categoria: "+sottocategoria.getNome());
+                System.out.println("Descrizione: "+sottocategoria.getDescrizione());
+                System.out.println("Campi:");
+                sottocategoria.getCampi().forEach(System.out::println);
+            }
+
+            //scelta di una sottocategoria tra quelle elencate e visualizzazione del suo albero
+
+
+
+
 
         }else
             System.out.println("\nNessuna gerarchia Inserita");

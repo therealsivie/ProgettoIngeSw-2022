@@ -1,8 +1,8 @@
 package controller;
 
-import model.structure.Categoria;
+import model.gerarchia.Categoria;
 import utility.JsonUtil;
-import model.structure.Gerarchia;
+import model.gerarchia.Gerarchia;
 import utility.MyMenu;
 
 import java.util.ArrayList;

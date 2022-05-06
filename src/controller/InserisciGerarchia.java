@@ -1,6 +1,6 @@
 package controller;
 
-import model.structure.*;
+import model.gerarchia.*;
 import utility.JsonUtil;
 import utility.InputDati;
 import utility.MyMenu;

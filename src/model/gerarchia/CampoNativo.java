@@ -1,6 +1,5 @@
-package model.structure;
+package model.gerarchia;
 
-import java.util.ArrayList;
 public class CampoNativo {
     private final String nomeCampo;
     private final boolean required;

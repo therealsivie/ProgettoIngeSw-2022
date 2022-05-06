@@ -1,4 +1,4 @@
-package model.structure;
+package model.gerarchia;
 
 import java.util.ArrayList;
 

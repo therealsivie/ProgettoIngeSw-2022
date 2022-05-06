@@ -1,4 +1,4 @@
-package model.structure;
+package model.gerarchia;
 
 public class Gerarchia {
     private final Categoria radice;

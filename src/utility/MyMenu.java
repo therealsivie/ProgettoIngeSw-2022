@@ -13,12 +13,14 @@ public class MyMenu {
     //final private static String VOCE_USCITA = "0\tEsci";
     final private static String RICHIESTA_INSERIMENTO = "Digita il numero dell'opzione desiderata > ";
 
-    final private String titolo;
+    private String titolo;
     private ArrayList<String> voci = new ArrayList<>();
 
     public MyMenu(String titolo) {
         this.titolo = titolo;
     }
+
+    public MyMenu(){}
 
     public void setVoci(ArrayList<String> voci){
         if(this.voci.equals(null))
@@ -45,5 +47,9 @@ public class MyMenu {
 
     public String getVoce(int scelta) {
         return voci.get(scelta);
+    }
+
+    public void setTitolo(String titolo) {
+        this.titolo = titolo;
     }
 }

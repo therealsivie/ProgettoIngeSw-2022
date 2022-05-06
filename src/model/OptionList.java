@@ -57,5 +57,6 @@ public class OptionList {
         voci.clear();
         voci.add(new Option("Esci", new Exit()));
         voci.add(new Option("Logout", new Logout()));
+        voci.add(new Option("Visualizza Scambi", new VisualizzaScambi()));
     }
 }

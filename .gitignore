@@ -17,11 +17,11 @@
 *.zip
 *.tar.gz
 *.rar
+*.jar
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-# database file
-.db
-/out/artifacts/ProgettoIngeSw_2022_v1_jar/ProgettoIngeSw-2022.jar
-/Data.db
+# program files
+*.db
+*.json

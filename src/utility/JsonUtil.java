@@ -34,7 +34,7 @@ public class JsonUtil {
         try (Stream<Path> files = Files.list(Paths.get(directory))) {
             list = files.collect(Collectors.toList());
         } catch (IOException e) {
-            System.out.println("Errore di sto cazzo");
+            System.out.println("Errore: directory files/gerarchie non presente");
         }
         return list;
     }

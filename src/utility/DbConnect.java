@@ -8,6 +8,7 @@ import java.sql.*;
 
 public class DbConnect {
     String url = "jdbc:sqlite:./Data.db";
+
     public Connection connect() {
         Connection conn = null;
         try {
@@ -98,7 +99,7 @@ public class DbConnect {
                 pstmt.setString(1, newUser);
                 pstmt.setString(2, newPass);
                 pstmt.setBoolean(3, utente.getFirstLogin());
-                pstmt.setString(4, newUser);
+                pstmt.setString(4, utente.getUsername());
                 pstmt.executeUpdate();
                 return checked;
             } catch (SQLException e) {
@@ -109,14 +110,16 @@ public class DbConnect {
     }
 
     public boolean checkNewUser(String newUser) {
-        String sql = "SELECT username FROM utenti"
+        String sql = "SELECT username, firstlogin FROM utenti"
                 + " WHERE username = ?";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, newUser);
             ResultSet rs = pstmt.executeQuery();
-            rs.getString("username");
-            return false;
+            boolean firstlogin = rs.getBoolean("firstlogin");
+            String username = rs.getString("username");
+            //se user esiste e fa il primo login
+            return (username != null && firstlogin);
         } catch (SQLException e) {
             return true;
         }

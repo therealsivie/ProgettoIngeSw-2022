@@ -1,11 +1,13 @@
 package controller;
 
 import model.gerarchia.Gerarchia;
+import model.scambio.IntervalloOrario;
 import model.scambio.Scambio;
 import utility.InputDati;
 import utility.JsonUtil;
 import utility.MyMenu;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,30 +28,78 @@ public class InserisciScambio implements Action {
             }
             menu.setVoci(voci);
             Gerarchia scelta = gerarchiaList.get(menu.scegli());
-            String piazza = InputDati.leggiStringaNonVuota("Inserisci piazza: ");
+            String piazza = InputDati.leggiStringaNonVuota("Inserisci piazza di scambio (Citta): ");
             //creazione scambio
             Scambio scambio = new Scambio(scelta.getNomeRadice(), piazza);
+            //inserimento luoghi
+            boolean inserisciLuoghi;
+            List<String> luoghi = new ArrayList<>();
+            do{
+                String luogo = InputDati.leggiStringaNonVuota("Inserisci luogo: ");
+                luoghi.add(luogo);
+                inserisciLuoghi = InputDati.yesOrNo("Vuoi inserire altri luoghi? ");
+            }while (inserisciLuoghi);
 
-
+            //inserimento giorni scambio
+            scambio.setGiorni(this.inserisciGiorni());
+            //inserimento intervallo orario
             /**
-             * dà la facoltà al configuratore di fissare il valore dei seguenti parametri:
-             * - “Piazza”: la città in cui avvengono gli scambi: tale città è unica e, una volta stabilita, non può più cambiare;
-             * - “Luoghi”: alcuni luoghi (al limite uno solo) in cui tali scambi sono effettuati;
-             * - “Giorni”: il giorno o i giorni della settimana in cui gli scambi possono avere luogo;
              * - “Intervalli orari”: gli intervalli orari (almeno uno) entro cui effettuare gli scambi, dove
              *      i soli orari in corrispondenza dei quali si possono fissare appuntamenti finalizzati allo
              *      scambio di articoli fra le due parti coinvolte in un baratto sono quelli dello scoccare
              *      dell’ora e della mezz’ora;
-             * - “Scadenza”: il numero massimo di giorni entro cui un fruitore può accettare una
-             *      proposta di scambio avanzata da un altro fruitore
              */
+            scambio.setIntervalliOrari(this.inserisciIntervalli());
 
-
+            int scadenzaProposta = InputDati.leggiIntero("Inserisci numero giorni durata proposta: ");
 
             if(InputDati.yesOrNo("Salvare scambio? "))
                 JsonUtil.writeScambio(scambio);
         }
         else
             System.out.println("\nNon sono presenti Gerarchie per cui inserire scambi...");
+    }
+
+    private List<DayOfWeek> inserisciGiorni() {
+        boolean errore = false;
+        List<DayOfWeek> days = new ArrayList<>();
+        System.out.println("Inserisci giorni dello scambio (1=Lunedi, 2=Martedi, ..., 7=Domenica)");
+        do {
+            String dayString = InputDati.leggiStringaNonVuota("Giorni [1...7]: ");
+            for (int i = 0; i < dayString.length(); i++) {
+                char ch = dayString.charAt(i);
+                if (Character.isDigit(ch)) {
+                    int num = Character.getNumericValue(ch);
+                    if (num < 8){
+                        if (!days.contains(DayOfWeek.of(num))) {
+                            days.add(DayOfWeek.of(num));
+                            errore = false;
+                        }
+                    }
+                    else
+                        errore = true;
+                }
+            }
+            if (errore)
+                System.out.println("Errore nell'inserimento dei giorni... range disponibile [1...7]");
+        }while (errore);
+        return days;
+    }
+
+    private List<IntervalloOrario> inserisciIntervalli() {
+        boolean esci = true;
+        List<IntervalloOrario> intervals = new ArrayList<>();
+        do{
+            intervals.add(inserisciIntervallo());
+            esci = InputDati.yesOrNo("Vuoi inserire un altro intervallo? ");
+        }while (esci);
+        return intervals;
+    }
+
+    private IntervalloOrario inserisciIntervallo() {
+        //chiedo ora
+        //chiedo minuti (0 o 30)
+        //controllo se ora iniziale è precedente a ora finale altrimenti richiedo il secondo orario
+        return null;
     }
 }

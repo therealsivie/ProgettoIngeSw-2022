@@ -8,7 +8,7 @@ public class Scambio {
     private String piazza;
     private List<String> luoghi;
     private List<DayOfWeek> giorni;
-    private List<IntervalliOrari> intervalliOrari;
+    private List<IntervalloOrario> intervalliOrari;
     private int scadenzaProposta;
 
     public String getNomeGerarchiaScambio(){
@@ -28,7 +28,7 @@ public class Scambio {
         this.giorni = giorni;
     }
 
-    public void setIntervalliOrari(List<IntervalliOrari> intervalliOrari) {
+    public void setIntervalliOrari(List<IntervalloOrario> intervalliOrari) {
         this.intervalliOrari = intervalliOrari;
     }
 

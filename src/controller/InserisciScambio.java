@@ -85,7 +85,12 @@ public class InserisciScambio implements Action {
         boolean esci = true;
         List<IntervalloOrario> intervals = new ArrayList<>();
         do {
-            intervals.add(inserisciIntervallo());
+            IntervalloOrario interval = inserisciIntervallo();
+            boolean ok = intervals.stream().anyMatch(interval::isIntersected);
+            if (ok)
+                System.out.println("Attenzione: l'intervallo inserito interseca altri intervalli.");
+            else
+                intervals.add(interval);
             esci = InputDati.yesOrNo("Vuoi inserire un altro intervallo? ");
         } while (esci);
         return intervals;

@@ -8,6 +8,7 @@ import utility.JsonUtil;
 import utility.MyMenu;
 
 import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class InserisciScambio implements Action {
         MyMenu menu = new MyMenu("Inserisci scambio");
         List<Gerarchia> gerarchiaList = JsonUtil.getGerarchieLibere();
         ArrayList<String> voci = new ArrayList<>();
-        if( gerarchiaList.size() >= 1 ){
-            for (Gerarchia gerarchia: gerarchiaList){
+        if (gerarchiaList.size() >= 1) {
+            for (Gerarchia gerarchia : gerarchiaList) {
                 voci.add(gerarchia.getNomeRadice());
             }
             menu.setVoci(voci);
@@ -34,29 +35,24 @@ public class InserisciScambio implements Action {
             //inserimento luoghi
             boolean inserisciLuoghi;
             List<String> luoghi = new ArrayList<>();
-            do{
+            do {
                 String luogo = InputDati.leggiStringaNonVuota("Inserisci luogo: ");
                 luoghi.add(luogo);
                 inserisciLuoghi = InputDati.yesOrNo("Vuoi inserire altri luoghi? ");
-            }while (inserisciLuoghi);
+            } while (inserisciLuoghi);
 
             //inserimento giorni scambio
             scambio.setGiorni(this.inserisciGiorni());
+
             //inserimento intervallo orario
-            /**
-             * - “Intervalli orari”: gli intervalli orari (almeno uno) entro cui effettuare gli scambi, dove
-             *      i soli orari in corrispondenza dei quali si possono fissare appuntamenti finalizzati allo
-             *      scambio di articoli fra le due parti coinvolte in un baratto sono quelli dello scoccare
-             *      dell’ora e della mezz’ora;
-             */
             scambio.setIntervalliOrari(this.inserisciIntervalli());
 
             int scadenzaProposta = InputDati.leggiIntero("Inserisci numero giorni durata proposta: ");
+            scambio.setScadenzaProposta(scadenzaProposta);
 
-            if(InputDati.yesOrNo("Salvare scambio? "))
+            if (InputDati.yesOrNo("Salvare scambio? "))
                 JsonUtil.writeScambio(scambio);
-        }
-        else
+        } else
             System.out.println("\nNon sono presenti Gerarchie per cui inserire scambi...");
     }
 
@@ -70,36 +66,64 @@ public class InserisciScambio implements Action {
                 char ch = dayString.charAt(i);
                 if (Character.isDigit(ch)) {
                     int num = Character.getNumericValue(ch);
-                    if (num < 8){
+                    if (num < 8) {
                         if (!days.contains(DayOfWeek.of(num))) {
                             days.add(DayOfWeek.of(num));
                             errore = false;
                         }
-                    }
-                    else
+                    } else
                         errore = true;
                 }
             }
             if (errore)
                 System.out.println("Errore nell'inserimento dei giorni... range disponibile [1...7]");
-        }while (errore);
+        } while (errore);
         return days;
     }
 
     private List<IntervalloOrario> inserisciIntervalli() {
         boolean esci = true;
         List<IntervalloOrario> intervals = new ArrayList<>();
-        do{
-            intervals.add(inserisciIntervallo());
+        do {
+            IntervalloOrario interval = inserisciIntervallo();
+            boolean ok = intervals.stream().anyMatch(interval::isIntersected);
+            if (ok)
+                System.out.println("Attenzione: l'intervallo inserito interseca altri intervalli.");
+            else
+                intervals.add(interval);
             esci = InputDati.yesOrNo("Vuoi inserire un altro intervallo? ");
-        }while (esci);
+        } while (esci);
         return intervals;
     }
 
     private IntervalloOrario inserisciIntervallo() {
-        //chiedo ora
-        //chiedo minuti (0 o 30)
+        System.out.println("Orario iniziale");
+        LocalTime oraInizio = inserisciOrario();
+        boolean intervalloOk;
+        LocalTime oraFine;
+        do {
+            System.out.println("Orario finale");
+            oraFine = inserisciOrario();
+            intervalloOk = oraInizio.isAfter(oraFine);
+            if (intervalloOk)
+                System.out.println("Attenzione: l'orario finale non può essere minore di quello iniziale");
+        } while (intervalloOk);
         //controllo se ora iniziale è precedente a ora finale altrimenti richiedo il secondo orario
-        return null;
+        return new IntervalloOrario(oraInizio, oraFine);
+    }
+
+    private LocalTime inserisciOrario() {
+        //chiedo ora
+        int ora = InputDati.leggiIntero("Inserisci ora (0-23): ", 0, 23);
+        //chiedo minuti (0 o 30)
+        boolean minutiOk;
+        int minuti;
+        do {
+            minuti = InputDati.leggiIntero("Inserisci minuti (0 - 30): ");
+            minutiOk = (minuti != 0 && minuti != 30);
+            if (minutiOk)
+                System.out.println("Minuti inseriti errati, opzioni disponibili (0 - 30)");
+        } while (minutiOk);
+        return LocalTime.of(ora, minuti);
     }
 }

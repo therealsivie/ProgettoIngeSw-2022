@@ -60,6 +60,10 @@ public class Categoria {
         return strutturaCompleta;
     }
 
+    public ArrayList<Categoria> getFigli() {
+        return figli;
+    }
+
 
     @Override
     public String toString() {

@@ -29,6 +29,7 @@ public class Categoria {
     public String getDescrizione() {
         return descrizione;
     }
+    public String getPadre() { return padre; }
     public boolean isRadice() {
         return padre == null;
     }

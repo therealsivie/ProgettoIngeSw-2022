@@ -86,7 +86,7 @@ public class Categoria {
     public boolean isCampoPresente(String nomeCampo) {
         if (this.campi != null)
             for (CampoNativo campo : this.campi)
-                if(campo.getNome().equals(nomeCampo))
+                if(campo.getNome().equalsIgnoreCase(nomeCampo))
                     return true;
         return false;
     }
@@ -97,7 +97,7 @@ public class Categoria {
 
     public boolean checkNomeRipetuto(String nome) {
         for (Categoria cat: this.getStrutturaCompleta())
-            if(cat.getNome().equals(nome))
+            if(cat.getNome().equalsIgnoreCase(nome))
                 return true;
         return false;
     }

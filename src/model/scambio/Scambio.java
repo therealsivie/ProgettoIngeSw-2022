@@ -35,4 +35,20 @@ public class Scambio {
     public void setScadenzaProposta(int scadenzaProposta) {
         this.scadenzaProposta = scadenzaProposta;
     }
+
+    public String getPiazza() {
+        return piazza;
+    }
+
+    public List<String> getLuoghi() {
+        return luoghi;
+    }
+
+    public List<DayOfWeek> getGiorni() {
+        return giorni;
+    }
+
+    public List<IntervalloOrario> getIntervalliOrari() {
+        return intervalliOrari;
+    }
 }

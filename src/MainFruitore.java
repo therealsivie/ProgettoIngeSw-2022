@@ -11,17 +11,15 @@ public class MainFruitore {
         MyMenu menu = new MyMenu();
         boolean logged = false;
         String titolo;
-        do{
+        do {
             menu.setVoci(option.getFruitOptionList(logged));
-            if(logged)
-                titolo = "Programma Fruitore Loggato";
-            else
-                titolo = "Programma fruitore";
+            if (logged) titolo = "Programma Fruitore Loggato";
+            else titolo = "Programma fruitore";
             menu.setTitolo(titolo);
             int scelta = menu.scegli();
             try {
-                Action action =option.getOption(scelta).getAction();
-                if(action instanceof LoginFruit || action instanceof Logout)
+                Action action = option.getOption(scelta).getAction();
+                if (action instanceof LoginFruit || action instanceof Logout)
                     logged = action.execute();
                 else
                     action.execute();
@@ -29,6 +27,6 @@ public class MainFruitore {
                 System.out.println(e.getMessage());
                 System.exit(1);
             }
-        }while (true);
+        } while (true);
     }
 }

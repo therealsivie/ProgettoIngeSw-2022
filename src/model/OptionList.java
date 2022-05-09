@@ -1,11 +1,10 @@
 package model;
 import controller.*;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class OptionList {
-    final private ArrayList<Option> voci = new ArrayList<>();
-    String[] arr;
+    final private List<Option> voci = new ArrayList<>();
     public OptionList(){}
     private void setOptionConf(){
         voci.clear();

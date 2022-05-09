@@ -20,13 +20,14 @@ public class MyMenu {
         this.titolo = titolo;
     }
 
-    public MyMenu(){}
+    public MyMenu() {
+    }
 
-    public void setVoci(ArrayList<String> voci){
-        if(this.voci.equals(null))
-            this.voci.clear();
+    public void setVoci(ArrayList<String> voci) {
+        if (this.voci != null) this.voci.clear();
         this.voci = voci;
     }
+
     public int scegli() {
         stampaMenu();
         return InputDati.leggiIntero(RICHIESTA_INSERIMENTO, 0, voci.size());
@@ -40,13 +41,6 @@ public class MyMenu {
         }
         System.out.println(CORNICE);
         System.out.println();
-    }
-    public void addVoce (String voce){
-        this.voci.add(voce);
-    }
-
-    public String getVoce(int scelta) {
-        return voci.get(scelta);
     }
 
     public void setTitolo(String titolo) {

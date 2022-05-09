@@ -83,8 +83,8 @@ public class JsonUtil {
             gerarchiaList = readGerarchie();
             return gerarchiaList;
         }
-        for (Path path: filesScambi){
-            filesGerarchie.remove(Path.of("files/gerarchie/" + path.getFileName()));
+        for (Path path : filesScambi) {
+            filesGerarchie.remove(Path.of(directoryGerarchie + path.getFileName()));
         }
         try {
             Reader reader;
@@ -131,5 +131,24 @@ public class JsonUtil {
         } catch (IOException e) {
             System.out.println("Errore nel salvataggio della gerarchia");
         }
+    }
+
+    public static List<Gerarchia> readGerarchieByName(List<String> nomiGerarchie) {
+        List<Gerarchia> gerarchiaList = new ArrayList<>();
+        Gerarchia gerarchia;
+        try {
+            Reader reader;
+            for (String nomeFile : nomiGerarchie) {
+                Path path = Path.of(directoryGerarchie + nomeFile + ".json");
+                reader = Files.newBufferedReader(path);
+                Gson gson = new Gson();
+                // convert JSON file to Gerarchia
+                gerarchia = gson.fromJson(reader, Gerarchia.class);
+                gerarchiaList.add(gerarchia);
+            }
+        } catch (IOException ex) {
+            System.out.println("Errore apertura file Gerarchie");
+        }
+        return gerarchiaList;
     }
 }

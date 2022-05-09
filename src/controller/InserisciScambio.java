@@ -32,14 +32,9 @@ public class InserisciScambio implements Action {
             String piazza = InputDati.leggiStringaNonVuota("Inserisci piazza di scambio (Citta): ");
             //creazione scambio
             Scambio scambio = new Scambio(scelta.getNomeRadice(), piazza);
+
             //inserimento luoghi
-            boolean inserisciLuoghi;
-            List<String> luoghi = new ArrayList<>();
-            do {
-                String luogo = InputDati.leggiStringaNonVuota("Inserisci luogo: ");
-                luoghi.add(luogo);
-                inserisciLuoghi = InputDati.yesOrNo("Vuoi inserire altri luoghi? ");
-            } while (inserisciLuoghi);
+            scambio.setLuoghi(this.inserisciLuoghi());
 
             //inserimento giorni scambio
             scambio.setGiorni(this.inserisciGiorni());
@@ -54,6 +49,17 @@ public class InserisciScambio implements Action {
                 JsonUtil.writeScambio(scambio);
         } else
             System.out.println("\nNon sono presenti Gerarchie per cui inserire scambi...");
+    }
+
+    private List<String> inserisciLuoghi() {
+        boolean inserisciLuoghi;
+        List<String> luoghi = new ArrayList<>();
+        do {
+            String luogo = InputDati.leggiStringaNonVuota("Inserisci luogo: ");
+            luoghi.add(luogo);
+            inserisciLuoghi = InputDati.yesOrNo("Vuoi inserire altri luoghi? ");
+        } while (inserisciLuoghi);
+        return luoghi;
     }
 
     private List<DayOfWeek> inserisciGiorni() {

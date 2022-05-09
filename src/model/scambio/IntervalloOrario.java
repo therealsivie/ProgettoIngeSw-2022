@@ -20,4 +20,12 @@ public class IntervalloOrario {
             return true;
         else return interval.oraInizio.isBefore(this.oraInizio) && interval.oraFine.isAfter(this.oraFine);
     }
+
+    public LocalTime getOraInizio() {
+        return oraInizio;
+    }
+
+    public LocalTime getOraFine() {
+        return oraFine;
+    }
 }

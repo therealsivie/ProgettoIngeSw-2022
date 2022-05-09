@@ -66,15 +66,10 @@ public class DbConnect {
             String pass = rs.getString("password");
             boolean firstLogin = rs.getBoolean("firstlogin");
             //conn.close();
-            if (rs.getBoolean("usertype")) {
-                Configuratore c = new Configuratore(id, user, pass);
-                c.setFirstLogin(firstLogin);
-                return c;
-            } else {
-                Fruitore f = new Fruitore(id, user, pass);
-                f.setFirstLogin(firstLogin);
-                return f;
-            }
+            Configuratore c = new Configuratore(id, user, pass);
+            c.setFirstLogin(firstLogin);
+            return c;
+
         } catch (SQLException e) {
             return null;
         }

@@ -1,6 +1,7 @@
 package controller;
 
 import model.gerarchia.*;
+import model.user.Utente;
 import utility.JsonUtil;
 import utility.InputDati;
 import utility.MyMenu;
@@ -9,9 +10,9 @@ import java.util.ArrayList;
 
 public class InserisciGerarchia implements Action {
     @Override
-    public boolean execute() {
+    public Utente execute(Utente utente) {
         inserisciGerarchia();
-        return false;
+        return null;
     }
 
     private void inserisciGerarchia() {

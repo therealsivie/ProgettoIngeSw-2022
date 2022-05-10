@@ -1,6 +1,7 @@
 package controller;
 
 import model.gerarchia.Categoria;
+import model.user.Utente;
 import utility.JsonUtil;
 import model.gerarchia.Gerarchia;
 import utility.MyMenu;
@@ -9,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VisualizzaGerarchie implements Action {
+    @Override
+    public Utente execute(Utente utente) {
+        this.visualizza();
+        return null;
+    }
     private void visualizza() {
         List<Gerarchia> gerarchiaList = JsonUtil.readGerarchie();
         if (gerarchiaList != null && gerarchiaList.size() != 0) {
@@ -44,9 +50,4 @@ public class VisualizzaGerarchie implements Action {
         } else System.out.println("\nNessuna gerarchia Inserita");
     }
 
-    @Override
-    public boolean execute() {
-        this.visualizza();
-        return false;
-    }
 }

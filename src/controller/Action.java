@@ -1,5 +1,7 @@
 package controller;
 
+import model.user.Utente;
+
 public interface Action {
-    boolean execute() throws ExitException;
+    Utente execute(Utente utente) throws ExitException;
 }

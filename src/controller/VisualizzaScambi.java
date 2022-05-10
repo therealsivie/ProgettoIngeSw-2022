@@ -3,8 +3,8 @@ package controller;
 import model.gerarchia.Gerarchia;
 import model.scambio.IntervalloOrario;
 import model.scambio.Scambio;
+import model.user.Utente;
 import utility.JsonUtil;
-
 import java.time.DayOfWeek;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
@@ -13,9 +13,9 @@ import java.util.Locale;
 
 public class VisualizzaScambi implements Action {
     @Override
-    public boolean execute() throws ExitException {
+    public Utente execute(Utente utente) throws ExitException {
         this.visualizzaScambi();
-        return false;
+        return null;
     }
 
     private void visualizzaScambi() {

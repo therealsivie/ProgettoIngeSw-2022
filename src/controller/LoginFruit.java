@@ -1,18 +1,20 @@
 package controller;
 
+import model.user.Fruitore;
 import utility.DbConnect;
 import utility.InputDati;
 import model.user.Utente;
 
 public class LoginFruit implements Action {
+
     DbConnect db = new DbConnect();
 
     @Override
-    public boolean execute() {
+    public Utente execute(Utente utente) {
         return doLogin();
     }
 
-    private boolean doLogin() {
+    private Utente doLogin() {
         boolean firstLogin = InputDati.yesOrNo("Primo Login? ");
         if (firstLogin)
             return this.firstLogin();
@@ -20,43 +22,44 @@ public class LoginFruit implements Action {
             return this.normalLogin();
     }
 
-    private boolean normalLogin() {
+    private Fruitore normalLogin() {
+
         String user = InputDati.leggiStringaNonVuota("Inserisci username: ");
         String pass = InputDati.leggiStringaNonVuota("Inserisci password: ");
-        Utente u = db.checkLogin(user, pass);
-        if (u != null) {
-            if (user.equals(u.getUsername()) && pass.equals(u.getPassword()))
-                return true;
+        Utente fruitore = db.checkLogin(user, pass);
+        if (fruitore != null) {
+            if (user.equals(fruitore.getUsername()) && pass.equals(fruitore.getPassword()) && !fruitore.getUserType())
+                return (Fruitore) fruitore;
             else {
-                System.out.println("Login Errato...");
-                return false;
+                System.out.println("Login Errato, profilo Configuratore...");
+                return null;
             }
         }
-        return false;
+        return null;
     }
 
-    private boolean firstLogin() {
+    private Fruitore firstLogin() {
         boolean userOk = false;
         String user;
         String password;
-        do{
+        do {
             user = InputDati.leggiStringaNonVuota("Inserisci username: ");
             userOk = db.checkNewUser(user);
-            if(!userOk)
+            if (!userOk)
                 System.out.println("Username già presente");
             else
                 userOk = true;
-        }while(!userOk);
+        } while (!userOk);
         boolean passOk = false;
         do {
             password = InputDati.leggiStringaNonVuota("Inserisci password: ");
             String ripeti = InputDati.leggiStringaNonVuota("Ripeti password: ");
-            if(password.equals(ripeti))
+            if (password.equals(ripeti))
                 passOk = true;
             else
                 System.out.println("Passowrd diverse...");
-        }while(!passOk);
-        db.insertUser(user, password, false, false);
-        return true;
+        } while (!passOk);
+        return (Fruitore) db.insertUser(user, password, false, false);
+
     }
 }

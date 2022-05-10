@@ -1,5 +1,8 @@
 package model;
 import controller.*;
+import model.user.Configuratore;
+import model.user.Fruitore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +23,8 @@ public class OptionList {
         voci.add(new Option("Inserisci Gerarchia", new InserisciGerarchia()));
         voci.add(new Option("Aggiungi Scambio", new InserisciScambio()));
     }
-    public ArrayList<String> getConfOptionList(boolean logged){
-        if(logged){
+    public ArrayList<String> getConfOptionList(Configuratore conf){
+        if(conf != null){
             this.setLoggedOptionConf();
         }
         else{
@@ -36,8 +39,8 @@ public class OptionList {
     public Option getOption(int n){
         return voci.get(n);
     }
-    public ArrayList<String> getFruitOptionList(boolean logged) {
-        if (logged)
+    public ArrayList<String> getFruitOptionList(Fruitore fruitore) {
+        if (fruitore != null)
             this.setLoggedOptionFruit();
         else
             this.setOptionFruit();

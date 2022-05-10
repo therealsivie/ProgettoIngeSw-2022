@@ -5,6 +5,7 @@ public abstract class Utente {
     private String username;
     private String password;
     private boolean firstLogin;
+    private boolean usertype;
 
     public Utente(int id, String username, String password) {
         this.id = id;
@@ -15,16 +16,34 @@ public abstract class Utente {
     public int getId() {
         return this.id;
     }
-    public String getUsername(){
+
+    public String getUsername() {
         return this.username;
     }
-    public String getPassword(){
+
+    public String getPassword() {
         return this.password;
     }
-    public void setFirstLogin(boolean firstLogin){
+
+    public void setFirstLogin(boolean firstLogin) {
         this.firstLogin = firstLogin;
     }
-    public boolean getFirstLogin(){
+
+    public boolean getFirstLogin() {
         return this.firstLogin;
+    }
+
+    public boolean getUserType() {
+        return this.usertype;
+    }
+
+    public void setUsertype(boolean usertype) {
+        this.usertype = usertype;
+    }
+
+    public void updateCredentials(String newUser, String newPass, boolean firstLogin) {
+        this.username = newUser;
+        this.password = newPass;
+        this.firstLogin = firstLogin;
     }
 }

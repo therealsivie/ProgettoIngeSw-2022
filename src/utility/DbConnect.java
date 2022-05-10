@@ -38,9 +38,9 @@ public class DbConnect {
         }
     }
 
-    public void insertUser(String username, String password, boolean firstLogin, boolean userType) {
+    public Utente insertUser(String username, String password, boolean firstLogin, boolean userType) {
         String sql = "INSERT INTO utenti(username,password,firstlogin,usertype) VALUES(?,?,?,?)";
-
+        String sql2 = "SELECT id FROM utenti WHERE username = ?";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, username);
@@ -50,8 +50,27 @@ public class DbConnect {
             //se l'utente è un configuratore TRUE, se è un fruitore FALSE
             pstmt.setBoolean(4, userType);
             pstmt.executeUpdate();
+            int id = getId(username);
+            if(userType)
+                return new Configuratore(id, username, password);
+            else
+                return new Fruitore(id, username, password);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    private int getId(String username) {
+        String sql = "SELECT id FROM utenti WHERE username = ?";
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+            int id = rs.getInt("id");
+            return id;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -71,8 +90,7 @@ public class DbConnect {
             String pass = rs.getString("password");
             boolean firstLogin = rs.getBoolean("firstlogin");
             boolean userType = rs.getBoolean("usertype");
-            //conn.close();
-            if (rs.getBoolean("usertype")) {
+            if (userType) {
                 Configuratore c = new Configuratore(id, user, pass);
                 c.setFirstLogin(firstLogin);
                 return c;
@@ -92,14 +110,14 @@ public class DbConnect {
             String sql = "UPDATE utenti SET username = ? , "
                     + "password = ? , "
                     + "firstlogin = ? "
-                    + "WHERE username = ?";
+                    + "WHERE id = ?";
             utente.setFirstLogin(false);
             try (Connection conn = this.connect();
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, newUser);
                 pstmt.setString(2, newPass);
                 pstmt.setBoolean(3, utente.getFirstLogin());
-                pstmt.setString(4, utente.getUsername());
+                pstmt.setInt(4, utente.getId());
                 pstmt.executeUpdate();
                 return checked;
             } catch (SQLException e) {

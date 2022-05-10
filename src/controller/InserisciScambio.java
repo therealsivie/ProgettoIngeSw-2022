@@ -3,6 +3,7 @@ package controller;
 import model.gerarchia.Gerarchia;
 import model.scambio.IntervalloOrario;
 import model.scambio.Scambio;
+import model.user.Utente;
 import utility.InputDati;
 import utility.JsonUtil;
 import utility.MyMenu;
@@ -14,9 +15,9 @@ import java.util.List;
 
 public class InserisciScambio implements Action {
     @Override
-    public boolean execute() throws ExitException {
+    public Utente execute(Utente utente) throws ExitException {
         this.inserisciScambio();
-        return false;
+        return null;
     }
 
     private void inserisciScambio() {

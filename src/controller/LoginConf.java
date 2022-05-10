@@ -1,33 +1,33 @@
 package controller;
 
+import model.user.Configuratore;
 import utility.DbConnect;
 import utility.InputDati;
 import model.user.Utente;
 
 public class LoginConf implements Action {
     DbConnect db = new DbConnect();
-    private boolean doLogin() {
+    private Configuratore doLogin() {
         String user = InputDati.leggiStringaNonVuota("Inserisci username: ");
         String pass = InputDati.leggiStringaNonVuota("Inserisci password: ");
-        Utente u = db.checkLogin(user, pass);
-
+        Utente conf = db.checkLogin(user, pass);
         //controllo correttezza login
-        if(u != null) {
-            if (user.equals(u.getUsername()) && pass.equals(u.getPassword())) {
+        if(conf != null) {
+            if (user.equals(conf.getUsername()) && pass.equals(conf.getPassword()) && conf.getUserType()) {
                 //se first Login, procedura per il first Login, altrimenti si logga normalmente
-                if (u.getFirstLogin()) {
-                    return firstLogin(u);
+                if (conf.getFirstLogin()) {
+                    return firstLogin(conf);
                 }
-                return true;
+                return (Configuratore) conf;
             }
-            System.out.println("Login Errato...");
-            return false;
+            System.out.println("Login Errato, Profilo Fruitore...");
+            return null;
         }
         System.out.println("Login Errato...");
-        return false;
+        return null;
     }
 
-    private boolean firstLogin(Utente utente) {
+    private Configuratore firstLogin(Utente utente) {
         boolean credentialsChanged;
         String newUser;
         String newPass;
@@ -39,12 +39,13 @@ public class LoginConf implements Action {
                 System.out.println("Utente già presente, Inseriscine un altro");
         }
         while (!credentialsChanged);
+        utente.updateCredentials(newUser, newPass, false);
         System.out.println("Utente " + newUser + " modificato correttamente");
-        return credentialsChanged;
+        return (Configuratore) utente;
     }
 
     @Override
-    public boolean execute() {
+    public Utente execute(Utente utente) throws ExitException {
         return doLogin();
     }
 }

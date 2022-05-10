@@ -3,26 +3,28 @@ import controller.Logout;
 import controller.Action;
 import controller.ExitException;
 import model.OptionList;
+import model.user.Fruitore;
+import model.user.Utente;
 import utility.MyMenu;
 
 public class MainFruitore {
     public static void main(String[] args) {
         OptionList option = new OptionList();
         MyMenu menu = new MyMenu();
-        boolean logged = false;
+        Fruitore fruitore = null;
         String titolo;
         do {
-            menu.setVoci(option.getFruitOptionList(logged));
-            if (logged) titolo = "Programma Fruitore Loggato";
+            menu.setVoci(option.getFruitOptionList(fruitore));
+            if (fruitore != null) titolo = "Utente "+fruitore.getUsername()+" loggato";
             else titolo = "Programma fruitore";
             menu.setTitolo(titolo);
             int scelta = menu.scegli();
             try {
                 Action action = option.getOption(scelta).getAction();
                 if (action instanceof LoginFruit || action instanceof Logout)
-                    logged = action.execute();
+                    fruitore = (Fruitore) action.execute(fruitore);
                 else
-                    action.execute();
+                    action.execute(fruitore);
             } catch (ExitException e) {
                 System.out.println(e.getMessage());
                 System.exit(1);

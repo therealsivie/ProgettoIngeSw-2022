@@ -1,7 +1,6 @@
 package model;
 
 import controller.Action;
-
 public class Option {
     final private String label;
     final private Action action;

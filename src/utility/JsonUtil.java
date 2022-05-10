@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import model.gerarchia.Gerarchia;
 import model.scambio.Scambio;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,6 +32,7 @@ public class JsonUtil {
 
     private static List<Path> createListOfFile(String directory) {
         List<Path> list = null;
+
         try (Stream<Path> files = Files.list(Paths.get(directory))) {
             list = files.collect(Collectors.toList());
         } catch (IOException e) {
@@ -74,56 +74,27 @@ public class JsonUtil {
         return false;
     }
 
-
-    public static List<Gerarchia> getGerarchieLibere() {
-        List<Gerarchia> gerarchiaList = new ArrayList<>();
-        List<Path> filesScambi = JsonUtil.createListOfFile(directoryScambi);
-        List<Path> filesGerarchie = JsonUtil.createListOfFile(directoryGerarchie);
-        if (filesGerarchie == null) {
-            gerarchiaList = readGerarchie();
-            return gerarchiaList;
-        }
-        for (Path path : filesScambi) {
-            filesGerarchie.remove(Path.of(directoryGerarchie + path.getFileName()));
-        }
+    public static Scambio readScambio() {
+        Scambio scambio = null;
         try {
             Reader reader;
-            for (Path file : filesGerarchie) {
-                reader = Files.newBufferedReader(file);
-                Gson gson = new Gson();
-                // convert JSON file to Gerarchia
-                gerarchiaList.add(gson.fromJson(reader, Gerarchia.class));
-            }
-        } catch (IOException ex) {
-            System.out.println("Errore apertura file Gerarchie");
-        }
-        return gerarchiaList;
-    }
+            reader = Files.newBufferedReader(Path.of(directoryScambi+"scambio.json"));
+            Gson gson = new Gson();
+            // convert JSON file to Gerarchia
+            scambio = gson.fromJson(reader, Scambio.class);
 
-    public static List<Scambio> readScambi() {
-        List<Scambio> scambioList = new ArrayList<>();
-        try {
-            Reader reader;
-            if (JsonUtil.createListOfFile(directoryScambi) == null) {
-                return null;
-            }
-            for (Path file : JsonUtil.createListOfFile(directoryScambi)) {
-                reader = Files.newBufferedReader(file);
-                Gson gson = new Gson();
-                // convert JSON file to Gerarchia
-                scambioList.add(gson.fromJson(reader, Scambio.class));
-            }
-        } catch (IOException ex) {
+        } catch (
+                IOException ex) {
             System.out.println("Errore apertura file Gerarchie");
         }
-        return scambioList;
+        return scambio;
     }
 
 
     public static void writeScambio(Scambio scambio) {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        String nomeFile = directoryScambi + scambio.getNomeGerarchiaScambio() + ".json";
+        String nomeFile = directoryScambi + "scambio.json";
         try (
                 FileWriter writer = new FileWriter(nomeFile)
         ) {
@@ -133,22 +104,4 @@ public class JsonUtil {
         }
     }
 
-    public static List<Gerarchia> readGerarchieByName(List<String> nomiGerarchie) {
-        List<Gerarchia> gerarchiaList = new ArrayList<>();
-        Gerarchia gerarchia;
-        try {
-            Reader reader;
-            for (String nomeFile : nomiGerarchie) {
-                Path path = Path.of(directoryGerarchie + nomeFile + ".json");
-                reader = Files.newBufferedReader(path);
-                Gson gson = new Gson();
-                // convert JSON file to Gerarchia
-                gerarchia = gson.fromJson(reader, Gerarchia.class);
-                gerarchiaList.add(gerarchia);
-            }
-        } catch (IOException ex) {
-            System.out.println("Errore apertura file Gerarchie");
-        }
-        return gerarchiaList;
-    }
 }

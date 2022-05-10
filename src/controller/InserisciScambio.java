@@ -21,7 +21,7 @@ public class InserisciScambio implements Action {
     }
 
     private void inserisciScambio() {
-        MyMenu menu = new MyMenu("Inserisci scambio");
+        /*MyMenu menu = new MyMenu("Inserisci scambio");
         List<Gerarchia> gerarchiaList = JsonUtil.getGerarchieLibere();
         ArrayList<String> voci = new ArrayList<>();
         if (gerarchiaList.size() >= 1) {
@@ -29,10 +29,10 @@ public class InserisciScambio implements Action {
                 voci.add(gerarchia.getNomeRadice());
             }
             menu.setVoci(voci);
-            Gerarchia scelta = gerarchiaList.get(menu.scegli());
+            Gerarchia scelta = gerarchiaList.get(menu.scegli());*/
             String piazza = InputDati.leggiStringaNonVuota("Inserisci piazza di scambio (Citta): ");
             //creazione scambio
-            Scambio scambio = new Scambio(scelta.getNomeRadice(), piazza);
+            Scambio scambio = new Scambio(piazza);
 
             //inserimento luoghi
             scambio.setLuoghi(this.inserisciLuoghi());
@@ -48,8 +48,8 @@ public class InserisciScambio implements Action {
 
             if (InputDati.yesOrNo("Salvare scambio? "))
                 JsonUtil.writeScambio(scambio);
-        } else
-            System.out.println("\nNon sono presenti Gerarchie per cui inserire scambi...");
+        /*} else
+            System.out.println("\nNon sono presenti Gerarchie per cui inserire scambi...");*/
     }
 
     private List<String> inserisciLuoghi() {
@@ -89,7 +89,7 @@ public class InserisciScambio implements Action {
     }
 
     private List<IntervalloOrario> inserisciIntervalli() {
-        boolean esci = true;
+        boolean esci;
         List<IntervalloOrario> intervals = new ArrayList<>();
         do {
             IntervalloOrario interval = inserisciIntervallo();

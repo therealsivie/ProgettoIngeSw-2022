@@ -1,23 +1,20 @@
 package model.offerta;
 
-import model.gerarchia.CampoNativo;
 import model.gerarchia.Categoria;
 
 import java.util.List;
 
-public class Articolo {
+public class Offerta {
     private String titolo;
     private Categoria categoria;
-    private List<CampoNativo> listaCampiCompilati;
-    private String autore/*username*/;
-
+    private List<CampoCompilato> listaCampiCompilati;
+    private String autore;
     private List<StatoOfferta> stati;
     private StatoOfferta statoCorrente;
 
-    public Articolo(String titolo, Categoria categoria, List<CampoNativo> listaCampiCompilati, String autore) {
+    public Offerta(String titolo, Categoria categoria, String autore) {
         this.titolo = titolo;
         this.categoria = categoria;
-        this.listaCampiCompilati = listaCampiCompilati;
         this.autore = autore;
     }
 
@@ -27,5 +24,17 @@ public class Articolo {
 
     public void setStatoCorrente(StatoOfferta statoCorrente) {
         this.statoCorrente = statoCorrente;
+    }
+
+    public void addCampiCompilati(List<CampoCompilato> listaCampiCompilati){
+        this.listaCampiCompilati = listaCampiCompilati;
+    }
+
+    public String getTitolo() {
+        return titolo;
+    }
+
+    public String getAutore() {
+        return autore;
     }
 }

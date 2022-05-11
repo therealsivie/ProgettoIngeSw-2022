@@ -1,6 +1,7 @@
 package model.gerarchia;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Categoria {
     private final String nome;
@@ -8,6 +9,7 @@ public class Categoria {
     private ArrayList<CampoNativo> campi;
     private ArrayList<Categoria> figli;
     private final String padre;
+
     public Categoria(String nome, String descrizione, ArrayList<CampoNativo> campi, String padre) {
         this.nome = nome;
         this.descrizione = descrizione;
@@ -18,31 +20,40 @@ public class Categoria {
             this.campi = campi;
         this.padre = padre;
     }
+
     public void addSingoloCampo(CampoNativo campo) {
         if (this.campi == null)
             this.campi = new ArrayList<>();
         this.campi.add(campo);
     }
+
     public String getNome() {
         return nome;
     }
+
     public String getDescrizione() {
         return descrizione;
     }
-    public String getPadre() { return padre; }
+
+    public String getPadre() {
+        return padre;
+    }
+
     public boolean isRadice() {
         return padre == null;
     }
+
     public boolean isFoglia() {
         return figli == null;
     }
+
     public void addSingoloFiglio(Categoria figlia) {
         if (this.figli == null)
             this.figli = new ArrayList<>();
         this.figli.add(figlia);
     }
 
-    public ArrayList<CampoNativo> getCampi(){
+    public ArrayList<CampoNativo> getCampi() {
         return this.campi;
     }
 
@@ -65,7 +76,6 @@ public class Categoria {
         return figli;
     }
 
-
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
@@ -86,7 +96,7 @@ public class Categoria {
     public boolean isCampoPresente(String nomeCampo) {
         if (this.campi != null)
             for (CampoNativo campo : this.campi)
-                if(campo.getNome().equalsIgnoreCase(nomeCampo))
+                if (campo.getNome().equalsIgnoreCase(nomeCampo))
                     return true;
         return false;
     }
@@ -96,10 +106,41 @@ public class Categoria {
     }
 
     public boolean checkNomeRipetuto(String nome) {
-        for (Categoria cat: this.getStrutturaCompleta())
-            if(cat.getNome().equalsIgnoreCase(nome))
+        for (Categoria cat : this.getStrutturaCompleta())
+            if (cat.getNome().equalsIgnoreCase(nome))
                 return true;
         return false;
+    }
+
+    public List<Categoria> getCategorieFoglia() {
+        ArrayList<Categoria> categorieFoglia = new ArrayList<>();
+        if (this.figli != null) {
+            for (Categoria c : this.figli) {
+                if (c.isFoglia())
+                    categorieFoglia.add(c);
+                else
+                    categorieFoglia.addAll(c.getCategorieFoglia());
+            }
+        }
+        return categorieFoglia;
+    }
+
+    public List<CampoNativo> getCampiObbligatori() {
+        List<CampoNativo> campi = new ArrayList<>();
+        for (CampoNativo campo : this.campi) {
+            if (campo.isRequired())
+                campi.add(campo);
+        }
+        return campi;
+    }
+
+    public List<CampoNativo> getCampiNonObbligatori() {
+        List<CampoNativo> campi = new ArrayList<>();
+        for (CampoNativo campo : this.campi) {
+            if (!campo.isRequired())
+                campi.add(campo);
+        }
+        return campi;
     }
 }
 

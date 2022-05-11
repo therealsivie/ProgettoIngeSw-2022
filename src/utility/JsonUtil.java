@@ -3,7 +3,9 @@ package utility;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import model.gerarchia.Gerarchia;
+import model.offerta.Offerta;
 import model.scambio.Scambio;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,7 +17,9 @@ import java.util.stream.Stream;
 
 public class JsonUtil {
     private final static String directoryGerarchie = "files/gerarchie/";
-    private final static String directoryScambi = "files/scambi/";
+    private final static String directoryScambi = "files/scambio/";
+
+    private final static String directoryOfferte = "files/offerte/";
 
     public static void writeGerarchia(Gerarchia gerarchia) {
         GsonBuilder builder = new GsonBuilder();
@@ -78,7 +82,7 @@ public class JsonUtil {
         Scambio scambio = null;
         try {
             Reader reader;
-            reader = Files.newBufferedReader(Path.of(directoryScambi+"scambio.json"));
+            reader = Files.newBufferedReader(Path.of(directoryScambi + "scambio.json"));
             Gson gson = new Gson();
             // convert JSON file to Gerarchia
             scambio = gson.fromJson(reader, Scambio.class);
@@ -100,8 +104,23 @@ public class JsonUtil {
         ) {
             writer.write(gson.toJson(scambio));
         } catch (IOException e) {
-            System.out.println("Errore nel salvataggio della gerarchia");
+            System.out.println("Errore nel salvataggio dello scambio");
         }
     }
 
+    public static void writeOfferta(Offerta offerta) {
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        StringBuilder nomeFile = new StringBuilder();
+        nomeFile.append(directoryOfferte).append(offerta.getTitolo())
+                .append("_").append(offerta.getAutore())
+                .append(".json");
+        try (
+                FileWriter writer = new FileWriter(nomeFile.toString())
+        ) {
+            writer.write(gson.toJson(offerta));
+        } catch (IOException e) {
+            System.out.println("Errore nel salvataggio dell' offerta");
+        }
+    }
 }

@@ -123,4 +123,25 @@ public class JsonUtil {
             System.out.println("Errore nel salvataggio dell' offerta");
         }
     }
+
+    public static List<Offerta> readOfferte(){
+        List<Offerta> offertaList = new ArrayList<>();
+        Offerta offerta;
+        try {
+            Reader reader;
+            if (JsonUtil.createListOfFile(directoryOfferte) == null) {
+                return null;
+            }
+            for (Path file : JsonUtil.createListOfFile(directoryOfferte)) {
+                reader = Files.newBufferedReader(file);
+                Gson gson = new Gson();
+                // convert JSON file to Gerarchia
+                offerta = gson.fromJson(reader, Offerta.class);
+                offertaList.add(offerta);
+            }
+        } catch (IOException ex) {
+            System.out.println("Errore apertura file Offerte");
+        }
+        return offertaList;
+    }
 }

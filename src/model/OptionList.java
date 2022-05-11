@@ -60,6 +60,7 @@ public class OptionList {
         voci.add(new Option("Esci", new Exit()));
         voci.add(new Option("Logout", new Logout()));
         voci.add(new Option("Visualizza Scambi", new VisualizzaScambi()));
-        voci.add(new Option("Pubblica Articolo", new PubblicaOfferta()));
+        voci.add(new Option("Pubblica Offerta", new PubblicaOfferta()));
+        voci.add(new Option("Visualizza Offerte Aperte", new VisualizzaOfferte()));
     }
 }

@@ -11,4 +11,11 @@ public class CampoCompilato {
         this.contenuto = contenuto;
     }
 
+    public CampoNativo getCampo() {
+        return campo;
+    }
+
+    public String getContenuto() {
+        return contenuto;
+    }
 }

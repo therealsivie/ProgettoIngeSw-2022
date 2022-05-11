@@ -28,6 +28,17 @@ public class MyMenu {
         this.voci = voci;
     }
 
+    public void addVoce(String voce){
+        if (this.voci == null){
+            voci = new ArrayList<>();
+        }
+        voci.add(voce);
+    }
+
+    public int getVociSize(){
+        return voci.size();
+    }
+
     public int scegli() {
         stampaMenu();
         return InputDati.leggiIntero(RICHIESTA_INSERIMENTO, 0, voci.size());
@@ -45,5 +56,9 @@ public class MyMenu {
 
     public void setTitolo(String titolo) {
         this.titolo = titolo;
+    }
+
+    public void clearVoci() {
+        if (this.voci != null) this.voci.clear();
     }
 }

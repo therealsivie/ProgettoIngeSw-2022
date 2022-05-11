@@ -2,6 +2,7 @@ package model.offerta;
 
 import model.gerarchia.Categoria;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Offerta {
@@ -18,8 +19,10 @@ public class Offerta {
         this.autore = autore;
     }
 
-    public void setStati(List<StatoOfferta> stati) {
-        this.stati = stati;
+    public void archiviaStato(StatoOfferta statoCorrente) {
+        if (this.stati == null)
+            stati = new ArrayList<>();
+        stati.add(statoCorrente);
     }
 
     public void setStatoCorrente(StatoOfferta statoCorrente) {

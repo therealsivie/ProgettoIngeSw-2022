@@ -4,7 +4,6 @@ import controller.Action;
 import controller.ExitException;
 import model.OptionList;
 import model.user.Fruitore;
-import model.user.Utente;
 import utility.MyMenu;
 
 public class MainFruitore {

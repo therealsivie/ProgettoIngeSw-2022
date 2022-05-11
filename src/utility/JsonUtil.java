@@ -124,7 +124,7 @@ public class JsonUtil {
         }
     }
 
-    public static List<Offerta> readOfferte(){
+    public static List<Offerta> readOfferteByCategoria(String nomeCategoria){
         List<Offerta> offertaList = new ArrayList<>();
         Offerta offerta;
         try {
@@ -137,7 +137,30 @@ public class JsonUtil {
                 Gson gson = new Gson();
                 // convert JSON file to Gerarchia
                 offerta = gson.fromJson(reader, Offerta.class);
-                offertaList.add(offerta);
+                if(nomeCategoria.equals(offerta.getCategoriaName()))
+                    offertaList.add(offerta);
+            }
+        } catch (IOException ex) {
+            System.out.println("Errore apertura file Offerte");
+        }
+        return offertaList;
+    }
+
+    public static List<Offerta> readOffertaByAutore(String autore){
+        List<Offerta> offertaList = new ArrayList<>();
+        Offerta offerta;
+        try {
+            Reader reader;
+            if (JsonUtil.createListOfFile(directoryOfferte) == null) {
+                return null;
+            }
+            for (Path file : JsonUtil.createListOfFile(directoryOfferte)) {
+                reader = Files.newBufferedReader(file);
+                Gson gson = new Gson();
+                // convert JSON file to Gerarchia
+                offerta = gson.fromJson(reader, Offerta.class);
+                if(autore.equals(offerta.getAutore()))
+                    offertaList.add(offerta);
             }
         } catch (IOException ex) {
             System.out.println("Errore apertura file Offerte");

@@ -11,7 +11,7 @@ import utility.MyMenu;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VisualizzaOfferte implements Action{
+public class VisualizzaOfferte implements Action {
     @Override
     public Utente execute(Utente utente) throws ExitException {
         this.sceltaGerarchia();
@@ -43,16 +43,16 @@ public class VisualizzaOfferte implements Action{
         return categorieFoglia.get(menuCategorie.scegli());
     }
 
-    private void visualizzaOfferteAperte(Categoria categoria){
-        List<Offerta> offerte = JsonUtil.readOfferte();
-        if(offerte != null){
-            for (Offerta offerta: offerte){
-                if (offerta.getStatoCorrente().equals(StatoOfferta.APERTA)
-                        && offerta.getCategoriaName().equals(categoria.getNome()))
+    private void visualizzaOfferteAperte(Categoria categoria) {
+        List<Offerta> offerte = JsonUtil.readOfferteByCategoria(categoria.getNome());
+        if (offerte != null && offerte.size() >= 1) {
+            for (Offerta offerta : offerte) {
+                if (offerta.getStatoCorrente().equals(StatoOfferta.APERTA))
                     System.out.println(offerta);
                 else
-                    System.out.println("\nNon sono presenti offerte per questa categoria");
+                    System.out.println("\nNon sono presenti offerte APERTE per questa categoria");
             }
-        }
+        } else
+            System.out.println("\nNon sono presenti offerte per questa categoria");
     }
 }

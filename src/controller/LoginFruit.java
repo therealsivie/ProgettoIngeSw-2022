@@ -39,7 +39,7 @@ public class LoginFruit implements Action {
     }
 
     private Fruitore firstLogin() {
-        boolean userOk = false;
+        boolean userOk;
         String user;
         String password;
         do {

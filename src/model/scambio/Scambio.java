@@ -4,19 +4,13 @@ import java.time.DayOfWeek;
 import java.util.List;
 
 public class Scambio {
-    private String nomeGerarchiaScambio;
     private String piazza;
     private List<String> luoghi;
     private List<DayOfWeek> giorni;
     private List<IntervalloOrario> intervalliOrari;
     private int scadenzaProposta;
 
-    public String getNomeGerarchiaScambio(){
-        return this.nomeGerarchiaScambio;
-    }
-
-    public Scambio(String nomeGerarchiaScambio, String piazza) {
-        this.nomeGerarchiaScambio = nomeGerarchiaScambio;
+    public Scambio(String piazza) {
         this.piazza = piazza;
     }
 

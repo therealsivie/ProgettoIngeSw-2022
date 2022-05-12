@@ -2,8 +2,10 @@ package utility;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import model.gerarchia.Categoria;
 import model.gerarchia.Gerarchia;
 import model.offerta.Offerta;
+import model.offerta.StatoOfferta;
 import model.scambio.Scambio;
 
 import java.io.*;
@@ -161,6 +163,55 @@ public class JsonUtil {
                 offerta = gson.fromJson(reader, Offerta.class);
                 if(autore.equals(offerta.getAutore()))
                     offertaList.add(offerta);
+            }
+        } catch (IOException ex) {
+            System.out.println("Errore apertura file Offerte");
+        }
+        return offertaList;
+    }
+
+    public static List<Offerta> readOffertaByAutoreAndState(String autore, StatoOfferta stato){
+        List<Offerta> offertaList = new ArrayList<>();
+        Offerta offerta;
+        try {
+            Reader reader;
+            if (JsonUtil.createListOfFile(directoryOfferte) == null) {
+                return null;
+            }
+            for (Path file : JsonUtil.createListOfFile(directoryOfferte)) {
+                reader = Files.newBufferedReader(file);
+                Gson gson = new Gson();
+                // convert JSON file to Gerarchia
+                offerta = gson.fromJson(reader, Offerta.class);
+                if(autore.equals(offerta.getAutore()) && stato.equals(offerta.getStatoCorrente()))
+                    offertaList.add(offerta);
+            }
+        } catch (IOException ex) {
+            System.out.println("Errore apertura file Offerte");
+        }
+        return offertaList;
+    }
+
+    public static List<Offerta> readOfferteApertebyCategoria(String autore, Categoria categoria){
+        List<Offerta> offertaList = new ArrayList<>();
+        Offerta offerta;
+        try {
+            Reader reader;
+            if (JsonUtil.createListOfFile(directoryOfferte) == null) {
+                return null;
+            }
+            for (Path file : JsonUtil.createListOfFile(directoryOfferte)) {
+                reader = Files.newBufferedReader(file);
+                Gson gson = new Gson();
+                // convert JSON file to Gerarchia
+                offerta = gson.fromJson(reader, Offerta.class);
+                if(!autore.equals(offerta.getAutore())){
+                    if (offerta.getStatoCorrente().equals(StatoOfferta.APERTA)
+                            && offerta.getCategoria().getNome().equals(categoria.getNome())
+                            && offerta.getCategoria().getPadre().equals(categoria.getPadre())){
+                        offertaList.add(offerta);
+                    }
+                }
             }
         } catch (IOException ex) {
             System.out.println("Errore apertura file Offerte");

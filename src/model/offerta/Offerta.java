@@ -62,4 +62,8 @@ public class Offerta {
     public String getCategoriaName() {
         return categoria.getNome();
     }
+
+    public Categoria getCategoria() {
+        return this.categoria;
+    }
 }

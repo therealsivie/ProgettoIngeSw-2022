@@ -37,7 +37,6 @@ public class VisualizzaOfferteProprietario implements Action {
 
             for(Offerta offerta: offerte)
                 JsonUtil.writeOfferta(offerta);
-
         } else
             System.out.println("Non sei autore di nessuna offerta.");
 
@@ -52,7 +51,7 @@ public class VisualizzaOfferteProprietario implements Action {
         //scelta nuovo stato dal menu
         StatoOfferta newState = stati.get(menu.scegli());
         if (!offerta.getStatoCorrente().equals(newState)) {
-            offerta.archiviaStato(offerta.getStatoCorrente());
+            offerta.archiviaStato();
             offerta.setStatoCorrente(newState);
         }
     }

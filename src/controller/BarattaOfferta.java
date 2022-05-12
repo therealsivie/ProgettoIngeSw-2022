@@ -1,12 +1,15 @@
 package controller;
 
+import model.baratto.Baratto;
 import model.gerarchia.Categoria;
 import model.offerta.Offerta;
 import model.offerta.StatoOfferta;
 import model.user.Utente;
+import utility.InputDati;
 import utility.JsonUtil;
 import utility.MyMenu;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class BarattaOfferta implements Action {
@@ -37,6 +40,14 @@ public class BarattaOfferta implements Action {
         if (offertaScelta == null)
             return;
 
+        boolean conferma = InputDati.yesOrNo("Sei sicuro di voler scambiare " + offertaDaBarattare.getTitolo()
+                + " con: " + offertaScelta.getTitolo());
+        if (!conferma) {
+            return;
+        }
+
+        Baratto baratto = this.inserisciBaratto(offertaDaBarattare, offertaScelta);
+        JsonUtil.writeBaratto(baratto);
     }
 
     private Offerta scegliOffertaAltroAutore(Utente utente, Categoria categoria) {
@@ -46,7 +57,7 @@ public class BarattaOfferta implements Action {
             System.out.println("Non sono presenti offerte aperte della stessa categoria");
         } else {
             for (Offerta offerta : offerte) {
-                menu.addVoce(offerta.getTitolo()+"\t\tutente: "+offerta.getAutore());
+                menu.addVoce(offerta.getTitolo() + "\t\tutente: " + offerta.getAutore());
             }
             menu.addVoce("Esci senza barattare");
             int scelta = menu.scegli();
@@ -55,5 +66,15 @@ public class BarattaOfferta implements Action {
             return offerte.get(scelta);
         }
         return null;
+    }
+
+    private Baratto inserisciBaratto(Offerta offertaDaBarattare, Offerta offertaScelta) {
+        //cambio di stato delle offerte
+        offertaDaBarattare.setStatoCorrente(StatoOfferta.ACCOPPIATA);
+        JsonUtil.writeOfferta(offertaDaBarattare);
+        offertaScelta.setStatoCorrente(StatoOfferta.SELEZIONATA);
+        JsonUtil.writeOfferta(offertaScelta);
+        //creo baratto
+        return new Baratto(offertaDaBarattare, offertaScelta, LocalDateTime.now());
     }
 }

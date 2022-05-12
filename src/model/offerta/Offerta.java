@@ -19,13 +19,14 @@ public class Offerta {
         this.autore = autore;
     }
 
-    public void archiviaStato(StatoOfferta statoCorrente) {
+    public void archiviaStato() {
         if (this.stati == null)
             stati = new ArrayList<>();
         stati.add(statoCorrente);
     }
 
     public void setStatoCorrente(StatoOfferta statoCorrente) {
+        this.archiviaStato();
         this.statoCorrente = statoCorrente;
     }
 

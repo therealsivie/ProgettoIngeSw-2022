@@ -2,13 +2,16 @@ package utility;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import model.baratto.Baratto;
 import model.gerarchia.Categoria;
 import model.gerarchia.Gerarchia;
 import model.offerta.Offerta;
 import model.offerta.StatoOfferta;
 import model.scambio.Scambio;
 
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,8 +23,8 @@ import java.util.stream.Stream;
 public class JsonUtil {
     private final static String directoryGerarchie = "files/gerarchie/";
     private final static String directoryScambi = "files/scambio/";
-
     private final static String directoryOfferte = "files/offerte/";
+    private final static String directoryBaratti = "files/baratti/";
 
     public static void writeGerarchia(Gerarchia gerarchia) {
         GsonBuilder builder = new GsonBuilder();
@@ -126,7 +129,7 @@ public class JsonUtil {
         }
     }
 
-    public static List<Offerta> readOfferteByCategoria(String nomeCategoria){
+    public static List<Offerta> readOfferteByCategoria(String nomeCategoria) {
         List<Offerta> offertaList = new ArrayList<>();
         Offerta offerta;
         try {
@@ -139,7 +142,7 @@ public class JsonUtil {
                 Gson gson = new Gson();
                 // convert JSON file to Gerarchia
                 offerta = gson.fromJson(reader, Offerta.class);
-                if(nomeCategoria.equals(offerta.getCategoriaName()))
+                if (nomeCategoria.equals(offerta.getCategoriaName()))
                     offertaList.add(offerta);
             }
         } catch (IOException ex) {
@@ -148,7 +151,7 @@ public class JsonUtil {
         return offertaList;
     }
 
-    public static List<Offerta> readOffertaByAutore(String autore){
+    public static List<Offerta> readOffertaByAutore(String autore) {
         List<Offerta> offertaList = new ArrayList<>();
         Offerta offerta;
         try {
@@ -161,7 +164,7 @@ public class JsonUtil {
                 Gson gson = new Gson();
                 // convert JSON file to Gerarchia
                 offerta = gson.fromJson(reader, Offerta.class);
-                if(autore.equals(offerta.getAutore()))
+                if (autore.equals(offerta.getAutore()))
                     offertaList.add(offerta);
             }
         } catch (IOException ex) {
@@ -170,7 +173,7 @@ public class JsonUtil {
         return offertaList;
     }
 
-    public static List<Offerta> readOffertaByAutoreAndState(String autore, StatoOfferta stato){
+    public static List<Offerta> readOffertaByAutoreAndState(String autore, StatoOfferta stato) {
         List<Offerta> offertaList = new ArrayList<>();
         Offerta offerta;
         try {
@@ -183,7 +186,7 @@ public class JsonUtil {
                 Gson gson = new Gson();
                 // convert JSON file to Gerarchia
                 offerta = gson.fromJson(reader, Offerta.class);
-                if(autore.equals(offerta.getAutore()) && stato.equals(offerta.getStatoCorrente()))
+                if (autore.equals(offerta.getAutore()) && stato.equals(offerta.getStatoCorrente()))
                     offertaList.add(offerta);
             }
         } catch (IOException ex) {
@@ -192,7 +195,7 @@ public class JsonUtil {
         return offertaList;
     }
 
-    public static List<Offerta> readOfferteApertebyCategoria(String autore, Categoria categoria){
+    public static List<Offerta> readOfferteApertebyCategoria(String autore, Categoria categoria) {
         List<Offerta> offertaList = new ArrayList<>();
         Offerta offerta;
         try {
@@ -205,10 +208,10 @@ public class JsonUtil {
                 Gson gson = new Gson();
                 // convert JSON file to Gerarchia
                 offerta = gson.fromJson(reader, Offerta.class);
-                if(!autore.equals(offerta.getAutore())){
+                if (!autore.equals(offerta.getAutore())) {
                     if (offerta.getStatoCorrente().equals(StatoOfferta.APERTA)
                             && offerta.getCategoria().getNome().equals(categoria.getNome())
-                            && offerta.getCategoria().getPadre().equals(categoria.getPadre())){
+                            && offerta.getCategoria().getPadre().equals(categoria.getPadre())) {
                         offertaList.add(offerta);
                     }
                 }
@@ -217,5 +220,23 @@ public class JsonUtil {
             System.out.println("Errore apertura file Offerte");
         }
         return offertaList;
+    }
+
+    public static void writeBaratto(Baratto baratto) {
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        StringBuilder nomeFile = new StringBuilder();
+        nomeFile.append(directoryBaratti)
+                .append(baratto.getOffertaA().getAutore()).append("_")
+                .append(baratto.getOffertaB().getAutore()).append("_")
+                .append("_").append(baratto.getDataOraBaratto())
+                .append(".json");
+        try (
+                FileWriter writer = new FileWriter(nomeFile.toString())
+        ) {
+            writer.write(gson.toJson(baratto));
+        } catch (IOException e) {
+            System.out.println("Errore nel salvataggio dell' offerta");
+        }
     }
 }

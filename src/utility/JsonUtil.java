@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 
 public class JsonUtil {
     private final static String directoryGerarchie = "files/gerarchie/";
-    private final static String directoryScambi = "files/scambio/";
+    private final static String directoryScambi = "files/scambi/";
 
     private final static String directoryOfferte = "files/offerte/";
 

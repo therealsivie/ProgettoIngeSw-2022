@@ -52,7 +52,10 @@ public class VisualizzaOfferteProprietario implements Action {
         //scelta nuovo stato dal menu
         StatoOfferta newState = stati.get(menu.scegli());
         if (!offerta.getStatoCorrente().equals(newState)) {
+<<<<<<< Updated upstream
             offerta.archiviaStato(offerta.getStatoCorrente());
+=======
+>>>>>>> Stashed changes
             offerta.setStatoCorrente(newState);
         }
     }

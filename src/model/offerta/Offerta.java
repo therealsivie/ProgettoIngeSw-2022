@@ -19,7 +19,11 @@ public class Offerta {
         this.autore = autore;
     }
 
+<<<<<<< Updated upstream
     public void archiviaStato(StatoOfferta statoCorrente) {
+=======
+    private void archiviaStato() {
+>>>>>>> Stashed changes
         if (this.stati == null)
             stati = new ArrayList<>();
         stati.add(statoCorrente);

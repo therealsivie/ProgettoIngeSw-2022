@@ -8,6 +8,7 @@ import model.gerarchia.Gerarchia;
 import model.offerta.Offerta;
 import model.offerta.StatoOfferta;
 import model.scambio.Scambio;
+import model.user.Utente;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -238,5 +239,28 @@ public class JsonUtil {
         } catch (IOException e) {
             System.out.println("Errore nel salvataggio dell' offerta");
         }
+    }
+
+    public static List<Baratto> readBarattoByUtente(String utenteB){
+        List<Baratto> barattoList = new ArrayList<>();
+        Baratto baratto;
+        try {
+            Reader reader;
+            if (JsonUtil.createListOfFile(directoryBaratti) == null) {
+                return null;
+            }
+            for (Path file : JsonUtil.createListOfFile(directoryBaratti)) {
+                reader = Files.newBufferedReader(file);
+                Gson gson = new Gson();
+                // convert JSON file to Gerarchia
+                baratto = gson.fromJson(reader, Baratto.class);
+                if(baratto.getUtenteB().equals(utenteB)){
+                    barattoList.add(baratto);
+                }
+            }
+        } catch (IOException ex) {
+            System.out.println("Errore apertura file Offerte");
+        }
+        return barattoList;
     }
 }

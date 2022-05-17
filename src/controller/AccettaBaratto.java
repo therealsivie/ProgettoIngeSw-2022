@@ -1,8 +1,8 @@
 package controller;
 
 import model.baratto.Appuntamento;
+import model.baratto.Baratto;
 import model.offerta.Offerta;
-import model.offerta.StatoOfferta;
 import model.scambio.Scambio;
 import model.user.Utente;
 import utility.InputDati;
@@ -24,27 +24,30 @@ public class AccettaBaratto implements Action {
     private void accettaBaratto(Utente utente) {
 
         //selezione offerta da accettare
-        Offerta offertaDaAccettare = selezionaOfferta(utente);
-        if (offertaDaAccettare == null)
+        Baratto baratto = selezionaBaratto(utente);
+        if (baratto == null)
             return;
+
         //chiedo conferma dopo aver mostrato le info dell'offerta
-        System.out.println(offertaDaAccettare);
-        boolean accetta = InputDati.yesOrNo("sei sicuro di voler accettare l'offerta: " + offertaDaAccettare.getTitolo() + " ? ");
+        Offerta offertaBaratto = baratto.getOffertaA();
+        System.out.println(offertaBaratto);
+        boolean accetta = InputDati.yesOrNo("sei sicuro di voler accettare l'offerta: " + offertaBaratto.getTitolo() + " ? ");
 
         Scambio scambio = JsonUtil.readScambio();
-        Appuntamento appuntamento;
-        if (accetta)
-            appuntamento = this.inserisciAppuntamento(scambio);
 
-
+        if (!accetta)
+            return;
+        Appuntamento appuntamento = this.inserisciAppuntamento(scambio);
+        baratto.setAppuntamento(appuntamento);
+        JsonUtil.writeBaratto(baratto);
     }
 
-    private Offerta selezionaOfferta(Utente utente) {
-        List<Offerta> offerteSelezionate = JsonUtil.readOffertaByAutoreAndState(utente.getUsername(), StatoOfferta.SELEZIONATA);
+    private Baratto selezionaBaratto(Utente utente) {
+        List<Baratto> barattoList = JsonUtil.readBarattoByUtente(utente.getUsername());
         MyMenu menu = new MyMenu("Accetta Baratto o Esci");
-        if (offerteSelezionate != null && offerteSelezionate.size() >= 1) {
-            for (Offerta offerta : offerteSelezionate) {
-                menu.addVoce(offerta.getTitolo());
+        if (barattoList != null && barattoList.size() >= 1) {
+            for (Baratto baratto : barattoList) {
+                menu.addVoce(baratto.getOffertaA().getTitolo());
             }
             menu.addVoce("Esci senza accettare baratti");
         } else
@@ -53,10 +56,10 @@ public class AccettaBaratto implements Action {
         //scelta dell'offerta da accettare
         int scelta = menu.scegli();
         //esci
-        if (scelta == offerteSelezionate.size())
+        if (scelta == barattoList.size())
             return null;
         else
-            return offerteSelezionate.get(scelta);
+            return barattoList.get(scelta);
     }
 
     private Appuntamento inserisciAppuntamento(Scambio scambio) {

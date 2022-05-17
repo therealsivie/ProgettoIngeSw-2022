@@ -37,4 +37,15 @@ public class Baratto {
         return dataOraBaratto.truncatedTo(ChronoUnit.SECONDS);
     }
 
+    public void setAppuntamento(Appuntamento appuntamento) {
+        this.appuntamento = appuntamento;
+    }
+
+    public String getUtenteA() {
+        return utenteA;
+    }
+
+    public String getUtenteB() {
+        return utenteB;
+    }
 }

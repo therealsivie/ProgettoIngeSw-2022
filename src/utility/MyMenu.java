@@ -1,6 +1,7 @@
 package utility;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /*
 Questa classe rappresenta un menu testuale generico a piu' voci
@@ -14,7 +15,7 @@ public class MyMenu {
     final private static String RICHIESTA_INSERIMENTO = "Digita il numero dell'opzione desiderata > ";
 
     private String titolo;
-    private ArrayList<String> voci = new ArrayList<>();
+    private List<String> voci = new ArrayList<>();
 
     public MyMenu(String titolo) {
         this.titolo = titolo;

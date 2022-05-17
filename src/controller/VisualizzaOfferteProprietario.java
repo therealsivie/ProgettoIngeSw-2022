@@ -20,7 +20,7 @@ public class VisualizzaOfferteProprietario implements Action {
 
     private void visualizzaEModifica(Utente utente) {
         List<Offerta> offerte = JsonUtil.readOffertaByAutore(utente.getUsername());
-        MyMenu menu = new MyMenu("Modifica stato o Esci");
+        MyMenu menu = new MyMenu("Visualizza, Modifica o Esci");
         if (offerte != null && offerte.size() >= 1) {
             int scelta;
             do {
@@ -32,7 +32,7 @@ public class VisualizzaOfferteProprietario implements Action {
                 //modifica o uscita dal metodo
                 scelta = menu.scegli();
                 if(scelta != 0)
-                    this.modificaOfferta(offerte.get(scelta-1));
+                    this.scegliOpzione(offerte.get(scelta-1));
             } while (scelta != 0);
 
             for(Offerta offerta: offerte)
@@ -43,10 +43,17 @@ public class VisualizzaOfferteProprietario implements Action {
 
     }
 
+    private void scegliOpzione(Offerta offerta) {
+        if (offerta.getStatoCorrente().equals(StatoOfferta.APERTA) || offerta.getStatoCorrente().equals(StatoOfferta.RITIRATA))
+            this.modificaOfferta(offerta);
+        else
+            return;
+    }
+
     private void modificaOfferta(Offerta offerta) {
         System.out.println("Offerta da modificare: " + offerta.getTitolo());
         MyMenu menu = new MyMenu("Scegli stato Offerta");
-        List<StatoOfferta> stati = Arrays.stream(StatoOfferta.values()).collect(Collectors.toList());
+        List<StatoOfferta> stati = List.of(StatoOfferta.APERTA, StatoOfferta.RITIRATA);
         for (StatoOfferta stato : stati)
             menu.addVoce(stato.name());
         //scelta nuovo stato dal menu

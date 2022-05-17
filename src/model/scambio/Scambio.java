@@ -1,6 +1,9 @@
 package model.scambio;
 
 import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Scambio {
@@ -44,5 +47,17 @@ public class Scambio {
 
     public List<IntervalloOrario> getIntervalliOrari() {
         return intervalliOrari;
+    }
+
+    public ArrayList<String> getOrariScambio(){
+        ArrayList<String> orari = new ArrayList<>();
+        for (IntervalloOrario intervallo: intervalliOrari){
+            LocalTime oraTemp = intervallo.getOraInizio();
+            while (oraTemp.isBefore(intervallo.getOraFine())) {
+                orari.add(oraTemp.toString());
+                oraTemp = oraTemp.plusMinutes(30);
+            }
+        }
+        return orari;
     }
 }

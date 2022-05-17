@@ -65,5 +65,6 @@ public class OptionList {
         voci.add(new Option("Visualizza Offerte Aperte", new VisualizzaOfferte()));
         voci.add(new Option("Visualizza o Modifica Offerte Inserite", new VisualizzaOfferteProprietario()));
         voci.add(new Option("Baratta Oggetto", new BarattaOfferta()));
+        voci.add(new Option("Accetta Baratto", new AccettaBaratto()));
     }
 }

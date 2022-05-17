@@ -3,6 +3,7 @@ package controller;
 import model.baratto.Appuntamento;
 import model.baratto.Baratto;
 import model.offerta.Offerta;
+import model.offerta.StatoOfferta;
 import model.scambio.Scambio;
 import model.user.Utente;
 import utility.InputDati;
@@ -39,6 +40,16 @@ public class AccettaBaratto implements Action {
             return;
         Appuntamento appuntamento = this.inserisciAppuntamento(scambio);
         baratto.setAppuntamento(appuntamento);
+        //cambio stato offerta
+        Offerta offertaA = baratto.getOffertaA();
+        Offerta offertaB = baratto.getOffertaB();
+        offertaA.setStatoCorrente(StatoOfferta.IN_SCAMBIO);
+        offertaB.setStatoCorrente(StatoOfferta.IN_SCAMBIO);
+        baratto.setOffertaA(offertaA);
+        baratto.setOffertaB(offertaB);
+        //salvataggio dati
+        JsonUtil.writeOfferta(offertaA);
+        JsonUtil.writeOfferta(offertaB);
         JsonUtil.writeBaratto(baratto);
     }
 
@@ -82,6 +93,7 @@ public class AccettaBaratto implements Action {
         System.out.println("Giorno: " + giorno);
 
         //mostro orari disponibili e scelgo
+        //da mettere a posto
         MyMenu menuOrari = new MyMenu("scegli orario");
         ArrayList<String> orari = scambio.getOrariScambio();
         menuOrari.setVoci(orari);

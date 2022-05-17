@@ -53,6 +53,7 @@ public class Scambio {
         ArrayList<String> orari = new ArrayList<>();
         for (IntervalloOrario intervallo: intervalliOrari){
             LocalTime oraTemp = intervallo.getOraInizio();
+            //da aggiustare
             while (intervallo.getOraFine().isAfter(oraTemp)) {
                 orari.add(oraTemp.toString());
                 oraTemp = oraTemp.plusMinutes(30);

@@ -41,6 +41,14 @@ public class Baratto {
         this.appuntamento = appuntamento;
     }
 
+    public void setOffertaA(Offerta offertaA) {
+        this.offertaA = offertaA;
+    }
+
+    public void setOffertaB(Offerta offertaB) {
+        this.offertaB = offertaB;
+    }
+
     public String getUtenteA() {
         return utenteA;
     }

@@ -254,7 +254,7 @@ public class JsonUtil {
                 Gson gson = new Gson();
                 // convert JSON file to Gerarchia
                 baratto = gson.fromJson(reader, Baratto.class);
-                if(baratto.getUtenteB().equals(utenteB)){
+                if(baratto.getUtenteB().equals(utenteB) && baratto.getOffertaB().getStatoCorrente().equals(StatoOfferta.SELEZIONATA)){
                     barattoList.add(baratto);
                 }
             }

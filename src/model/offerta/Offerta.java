@@ -19,17 +19,14 @@ public class Offerta {
         this.autore = autore;
     }
 
-<<<<<<< Updated upstream
-    public void archiviaStato(StatoOfferta statoCorrente) {
-=======
     private void archiviaStato() {
->>>>>>> Stashed changes
         if (this.stati == null)
             stati = new ArrayList<>();
         stati.add(statoCorrente);
     }
 
     public void setStatoCorrente(StatoOfferta statoCorrente) {
+        this.archiviaStato();
         this.statoCorrente = statoCorrente;
     }
 
@@ -65,5 +62,9 @@ public class Offerta {
 
     public String getCategoriaName() {
         return categoria.getNome();
+    }
+
+    public Categoria getCategoria() {
+        return this.categoria;
     }
 }

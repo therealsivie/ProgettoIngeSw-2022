@@ -8,7 +8,7 @@ import java.util.List;
 public class Offerta {
     private String titolo;
     private Categoria categoria;
-    private List<CampoCompilato> listaCampiCompilati;
+    private List<CampoCompilato> listaCampiCompilati = new ArrayList<>();
     private String autore;
     private List<StatoOfferta> stati;
     private StatoOfferta statoCorrente;
@@ -26,12 +26,12 @@ public class Offerta {
     }
 
     public void setStatoCorrente(StatoOfferta statoCorrente) {
-        this.archiviaStato();
+        if(stati != null) this.archiviaStato();
         this.statoCorrente = statoCorrente;
     }
 
     public void addCampiCompilati(List<CampoCompilato> listaCampiCompilati){
-        this.listaCampiCompilati = listaCampiCompilati;
+        this.listaCampiCompilati.addAll(listaCampiCompilati);
     }
 
     public String getTitolo() {

@@ -26,7 +26,7 @@ public class Offerta {
     }
 
     public void setStatoCorrente(StatoOfferta statoCorrente) {
-        if(stati != null) this.archiviaStato();
+        this.archiviaStato();
         this.statoCorrente = statoCorrente;
     }
 

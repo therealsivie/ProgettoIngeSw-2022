@@ -13,4 +13,12 @@ public class Appuntamento {
         this.dataOra = dataOra;
         this.giorno = giorno;
     }
+
+    public String toString(){
+        StringBuilder str = new StringBuilder();
+        str.append("\nLuogo: ").append(luogo)
+                .append("\nOra: ").append(dataOra)
+                .append("\nGiorno: ").append(giorno.name());
+        return str.toString();
+    }
 }

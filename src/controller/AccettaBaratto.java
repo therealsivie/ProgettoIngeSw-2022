@@ -47,6 +47,7 @@ public class AccettaBaratto implements Action {
         offertaB.setStatoCorrente(StatoOfferta.IN_SCAMBIO);
         baratto.setOffertaA(offertaA);
         baratto.setOffertaB(offertaB);
+        baratto.setRispondeA(true);
         //salvataggio dati
         JsonUtil.writeOfferta(offertaA);
         JsonUtil.writeOfferta(offertaB);

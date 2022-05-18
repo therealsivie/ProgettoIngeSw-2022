@@ -15,6 +15,7 @@ public class Baratto {
     private String utenteA;
     private String utenteB;
 
+    private boolean rispondeA;
     private Appuntamento appuntamento;
 
     public Baratto(Offerta offertaA, Offerta offertaB, LocalDateTime dataOraBaratto) {
@@ -55,5 +56,16 @@ public class Baratto {
 
     public String getUtenteB() {
         return utenteB;
+    }
+
+    public Appuntamento getAppuntamento() {
+        return appuntamento;
+    }
+    public void setRispondeA(boolean rispondeA) {
+        this.rispondeA = rispondeA;
+    }
+
+    public boolean isRispondeA() {
+        return rispondeA;
     }
 }

@@ -16,6 +16,8 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -256,6 +258,32 @@ public class JsonUtil {
                 baratto = gson.fromJson(reader, Baratto.class);
                 if(baratto.getUtenteB().equals(utenteB) && baratto.getOffertaB().getStatoCorrente().equals(StatoOfferta.SELEZIONATA)){
                     barattoList.add(baratto);
+                }
+            }
+        } catch (IOException ex) {
+            System.out.println("Errore apertura file Offerte");
+        }
+        return barattoList;
+    }
+
+    public static List<Baratto> readBarattoInScambio(String utente){
+        List<Baratto> barattoList = new ArrayList<>();
+        Baratto baratto;
+        try {
+            Reader reader;
+            if (JsonUtil.createListOfFile(directoryBaratti) == null) {
+                return null;
+            }
+            for (Path file : JsonUtil.createListOfFile(directoryBaratti)) {
+                reader = Files.newBufferedReader(file);
+                Gson gson = new Gson();
+                // convert JSON file to Gerarchia
+                baratto = gson.fromJson(reader, Baratto.class);
+                if(baratto.getUtenteB().equals(utente) || baratto.getUtenteA().equals(utente)){
+                    if(baratto.getOffertaB().getStatoCorrente().equals(StatoOfferta.IN_SCAMBIO)
+                            && baratto.getOffertaB().getStatoCorrente().equals(StatoOfferta.IN_SCAMBIO)) {
+                        barattoList.add(baratto);
+                    }
                 }
             }
         } catch (IOException ex) {

@@ -47,7 +47,7 @@ public class AccettaBaratto implements Action {
         offertaB.setStatoCorrente(StatoOfferta.IN_SCAMBIO);
         baratto.setOffertaA(offertaA);
         baratto.setOffertaB(offertaB);
-        baratto.setRispondeA(true);
+        baratto.setDecisore(offertaA.getAutore());
         //salvataggio dati
         JsonUtil.writeOfferta(offertaA);
         JsonUtil.writeOfferta(offertaB);
@@ -56,6 +56,12 @@ public class AccettaBaratto implements Action {
 
     private Baratto selezionaBaratto(Utente utente) {
         List<Baratto> barattoList = JsonUtil.readBarattoByUtente(utente.getUsername());
+        //se non ci sono offerte
+        if (barattoList.size() == 0){
+            System.out.println("errore, lista vuota");
+            return null;
+        }
+
         MyMenu menu = new MyMenu("Accetta Baratto o Esci");
         if (barattoList != null && barattoList.size() >= 1) {
             for (Baratto baratto : barattoList) {

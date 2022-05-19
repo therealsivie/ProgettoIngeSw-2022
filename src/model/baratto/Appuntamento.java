@@ -21,4 +21,21 @@ public class Appuntamento {
                 .append("\nGiorno: ").append(giorno.name());
         return str.toString();
     }
+
+    public String getLuogo() {
+        return luogo;
+    }
+
+    public LocalTime getDataOra() {
+        return dataOra;
+    }
+
+    public DayOfWeek getGiorno() {
+        return giorno;
+    }
+    public boolean equals(Appuntamento appuntamento){
+        return this.dataOra.equals(appuntamento.getDataOra())
+                && this.giorno.equals(appuntamento.getGiorno())
+                && this.luogo.equals(appuntamento.getLuogo());
+    }
 }

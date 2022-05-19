@@ -10,6 +10,7 @@ import model.offerta.StatoOfferta;
 import model.scambio.Scambio;
 import model.user.Utente;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
@@ -148,7 +149,7 @@ public class JsonUtil {
                 if (nomeCategoria.equals(offerta.getCategoriaName()))
                     offertaList.add(offerta);
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             System.out.println("Errore apertura file Offerte");
         }
         return offertaList;
@@ -290,5 +291,20 @@ public class JsonUtil {
             System.out.println("Errore apertura file Offerte");
         }
         return barattoList;
+    }
+
+    public static void deleteBaratto(Baratto baratto) {
+        StringBuilder nomeFile = new StringBuilder();
+        nomeFile.append(directoryBaratti)
+                .append(baratto.getOffertaA().getAutore()).append("_")
+                .append(baratto.getOffertaB().getAutore()).append("_")
+                .append("_").append(baratto.getDataOraBaratto())
+                .append(".json");
+
+        File fileBaratto = new File(nomeFile.toString());
+        if(fileBaratto.delete())
+            System.out.println("Baratto chiuso");
+        else
+            System.out.println("impossibile chiudere baratto");
     }
 }

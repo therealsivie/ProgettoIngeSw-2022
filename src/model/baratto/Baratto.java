@@ -12,18 +12,13 @@ public class Baratto {
 
     private LocalDateTime dataOraBaratto;
 
-    private String utenteA;
-    private String utenteB;
-
-    private boolean rispondeA;
+    private String decisore;
     private Appuntamento appuntamento;
 
     public Baratto(Offerta offertaA, Offerta offertaB, LocalDateTime dataOraBaratto) {
         this.offertaA = offertaA;
         this.offertaB = offertaB;
         this.dataOraBaratto = dataOraBaratto;
-        this.utenteA = offertaA.getAutore();
-        this.utenteB = offertaB.getAutore();
     }
 
     public Offerta getOffertaA() {
@@ -51,21 +46,22 @@ public class Baratto {
     }
 
     public String getUtenteA() {
-        return utenteA;
+        return offertaA.getAutore();
     }
 
     public String getUtenteB() {
-        return utenteB;
+        return offertaB.getAutore();
     }
 
     public Appuntamento getAppuntamento() {
         return appuntamento;
     }
-    public void setRispondeA(boolean rispondeA) {
-        this.rispondeA = rispondeA;
+
+    public String getDecisore() {
+        return decisore;
     }
 
-    public boolean isRispondeA() {
-        return rispondeA;
+    public void setDecisore(String decisore) {
+        this.decisore = decisore;
     }
 }
